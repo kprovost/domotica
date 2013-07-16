@@ -1,1 +1,7 @@
-Hello world!
+<h1>All lights</h1>
+
+<ul>
+    {% for light in lights %}
+        <li>{{ light.getName }}</li>
+    {% endfor %}
+</ul>

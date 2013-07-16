@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import light
 
 def index(request):
-    return render(request, "lights.html")
+    lights = light.loadAll()
+    context = { 'lights' : lights }
+    return render(request, "lights.html", context)
