@@ -1,10 +1,12 @@
 from django.conf.urls import patterns, include, url
+import views
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^$', 'domotica.views.index', name='index')
     # Examples:
     # url(r'^$', 'domotica.views.home', name='home'),
     # url(r'^domotica/', include('domotica.foo.urls')),
