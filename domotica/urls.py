@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.conf import settings
 import views
 
 # Uncomment the next two lines to enable the admin:
@@ -6,7 +7,7 @@ import views
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'domotica.views.index', name='index')
+    url(r'^$', 'domotica.views.index', name='index'),
     # Examples:
     # url(r'^$', 'domotica.views.home', name='home'),
     # url(r'^domotica/', include('domotica.foo.urls')),
@@ -16,4 +17,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve')
 )

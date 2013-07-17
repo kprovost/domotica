@@ -1,7 +1,12 @@
+{% load staticfiles %}
+
 <h1>All lights</h1>
 
 <ul>
     {% for light in lights %}
-        <li>{{ light.getName }}</li>
+    <li>
+    <img src="{% static 'light-off.svg' %}"/>
+        {{ light.getName }}
+    </li>
     {% endfor %}
 </ul>
