@@ -16,14 +16,14 @@
 
 <h1>All lights</h1>
 
-<ul>
-    {% for light in lights %}
-    <li>
+{% for light in lights %}
+<div class="lineitem">
     <img class="lighticon" src="{% static 'light-off.svg' %}"/>
+    <div class="linedescription">
         {{ light.getName }}
-    </li>
-    {% endfor %}
-</ul>
+    </div>
+</div>
+{% endfor %}
 
     </body>
 </html>

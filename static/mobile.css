@@ -1,5 +1,36 @@
+body
+{
+background-color: #000000;
+}
+
 .lighticon
 {
-width: 64px;
-height: 64px;
+width: 40px;
+height: 80px;
+position: absolute;
+top: 0;
+bottom: 0;
+left: 10px;
+margin: auto;
+}
+
+.linedescription
+{
+height: 50px;
+position: absolute;
+top: 0;
+bottom: 0;
+left: 75px;
+margin: auto;
+font-size: 175%;
+}
+
+.lineitem
+{
+height: 75px;
+background-color: #2a8cf5;
+border-radius: 20px;
+margin: 10px;
+
+position: relative;
 }
