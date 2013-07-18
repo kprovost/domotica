@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link rel="apple-touch-icon" href="static/apple-touch-icon-114x114.png"/>
+
+        <link rel="apple-touch-startup-image" href="startup.png" />
+        <link rel="stylesheet" type="text/css" href="static/mobile.css" media="screen, mobile" />
+        <title>Domotica</title>
+    </head>
+    <body>
 {% load staticfiles %}
 
 <h1>All lights</h1>
@@ -5,8 +19,11 @@
 <ul>
     {% for light in lights %}
     <li>
-    <img src="{% static 'light-off.svg' %}"/>
+    <img class="lighticon" src="{% static 'light-off.svg' %}"/>
         {{ light.getName }}
     </li>
     {% endfor %}
 </ul>
+
+    </body>
+</html>
