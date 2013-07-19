@@ -10,6 +10,13 @@ def index(request):
     return render(request, "lights.html", context)
 
 @csrf_exempt
-def lightswitch(request):
-    print "Request.id %s" % request.REQUEST["id"]
-    raise Http404
+def lightswitch(request, action):
+    l = light.Light("", request.REQUEST["id"])
+
+    if action != "toggle":
+        raise Http404
+
+    if not l.toggle():
+        raise Http404
+
+    return HttpResponse()

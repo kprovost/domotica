@@ -8,7 +8,7 @@ import views
 
 urlpatterns = patterns('',
     url(r'^$', 'domotica.views.index', name='index'),
-    url(r'^lightswitch', 'domotica.views.lightswitch', name='lightswitch'),
+    url(r'^lightswitch/(?P<action>.*)', 'domotica.views.lightswitch', name='lightswitch'),
 
     # Examples:
     # url(r'^$', 'domotica.views.home', name='home'),

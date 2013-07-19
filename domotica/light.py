@@ -17,6 +17,9 @@ class Light:
     def getTimeout(self):
         return 10
 
+    def toggle(self):
+        return False
+
 def loadAll():
     lights = [ ]
     for name, id in lightconf.lights:

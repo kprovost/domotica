@@ -1,8 +1,11 @@
 function lightswitch()
 {
     id = this.id.replace("light_", "");
-    $.post("/lightswitch", { id: id })
-        .fail(location.reload());
+    $.post("/lightswitch/toggle", { id: id })
+        .fail(function(){
+                console.log("Failed to post lightswitch/toggle" + id);
+                location.reload();
+            });
 };
 
 $(document).ready(function () {
