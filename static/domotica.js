@@ -1,6 +1,7 @@
 function lightswitch()
 {
-    $.post("/lightswitch", { id: this.id });
+    id = this.id.replace("light_", "");
+    $.post("/lightswitch", { id: id });
 };
 
 $(document).ready(function () {
