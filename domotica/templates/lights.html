@@ -32,7 +32,7 @@
 {% for light in lights %}
 <li>
     {{ light.getName }}
-    <div class="toggle active">
+    <div class="toggle {% if light.isOn %}active{% endif %}">
         <div class="toggle-handle"></div>
     </div>
 </li>

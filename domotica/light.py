@@ -9,7 +9,7 @@ class Light:
         return self._name
 
     def isOn(self):
-        return False
+        return (self._id / 2) % 2 == 0
 
     def getTimeout(self):
         return 10
