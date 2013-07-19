@@ -8,6 +8,9 @@ class Light:
     def getName(self):
         return self._name
 
+    def getID(self):
+        return self._id
+
     def isOn(self):
         return (self._id / 2) % 2 == 0
 

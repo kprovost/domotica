@@ -8,6 +8,8 @@ import views
 
 urlpatterns = patterns('',
     url(r'^$', 'domotica.views.index', name='index'),
+    url(r'^lightswitch', 'domotica.views.lightswitch', name='lightswitch'),
+
     # Examples:
     # url(r'^$', 'domotica.views.home', name='home'),
     # url(r'^domotica/', include('domotica.foo.urls')),

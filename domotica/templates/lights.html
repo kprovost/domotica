@@ -16,6 +16,8 @@
         <link rel="stylesheet" href="static/ratchet.css">
         <script src="static/ratchet.js"></script>
 
+        <script src="static/domotica.js"></script>
+
         <title>Domotica</title>
     </head>
     <body>
@@ -31,7 +33,7 @@
 {% for light in lights %}
 <li>
     {{ light.getName }}
-    <div class="toggle {% if light.isOn %}active{% endif %}">
+    <div id="light_{{ light.getID }}" class="toggle {% if light.isOn %}active{% endif %}">
         <div class="toggle-handle"></div>
     </div>
 </li>
