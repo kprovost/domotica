@@ -16,13 +16,25 @@ def index(request):
 
 @csrf_exempt
 def lightswitch(request, action):
-    s7conn = s7.S7Comm(PLC_IP)
-    l = light.Light("", request.REQUEST["id"], s7conn)
-
-    if action != "toggle":
+    idInt = 0
+    try:
+        idInt = int(id)
+    except:
         raise Http404
 
-    if not l.toggle():
+    s7conn = s7.S7Comm(PLC_IP)
+    l = light.Light("", idInt, s7conn)
+
+    if action == "toggle":
+        if not l.toggleLight():
+            raise Http404
+    elif action == "toggle_motion":
+        if not l.toggleMotion():
+            raise Http404
+    elif action == "toggle_blink":
+        if not l.toggleBlinkOnAlarm():
+            raise Http404
+    else:
         raise Http404
 
     return HttpResponse()

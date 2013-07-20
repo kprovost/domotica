@@ -24,10 +24,30 @@ class Light:
     def isOn(self):
         return self._s7conn.readBit(self.STATUS_DB, self._id, self.STATUS_BIT)
 
+    def isActivatedByMotion(self):
+        return self._s7conn.readBit(self.STATUS_DB, self._id, self.MOTION_TRIGGER_BIT)
+
+    def blinkOnAlarm(self):
+        return self._s7conn.readBit(self.STATUS_DB, self._id, self.BLINK_ON_MOTION_BIT)
+
     def getTimeout(self):
         return 10
 
-    def toggle(self):
+    def toggleLight(self):
+        return False
+
+    def toggleMotion(self):
+        val = 0
+        if self.isActivatedByMotion():
+            val = 1
+        #return self._s7conn.writeBit(self.STATUS_DB, self._id, self.MOTION_TRIGGER_BIT, val)
+        return False
+
+    def toggleBlinkOnAlarm(self):
+        val = 0
+        if self.blinkOnAlarm():
+            val = 1
+        #return self._s7conn.writeBit(self.STATUS_DB, self._id, self.BLINK_ON_MOTION_BIT, val)
         return False
 
 def loadAll(s7conn):
