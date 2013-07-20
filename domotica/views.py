@@ -28,4 +28,17 @@ def lightswitch(request, action):
     return HttpResponse()
 
 def lightsettings(request, id):
-    return render(request, "lightsettings.html")
+    idInt = 0
+    try:
+        idInt = int(id)
+    except:
+        raise Http404
+
+    s7conn = s7.S7Comm(PLC_IP)
+
+    l = light.loadByID(s7conn, idInt)
+    if l is None:
+        raise Http404
+
+    context = { 'light': l }
+    return render(request, "lightsettings.html", context)

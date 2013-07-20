@@ -37,3 +37,8 @@ def loadAll(s7conn):
         lights.append(l)
     return lights
 
+def loadByID(s7conn, searchId):
+    for name, id in lightconf.lights:
+        if id == searchId:
+            return Light(name, id, s7conn)
+    return None
