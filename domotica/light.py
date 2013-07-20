@@ -2,18 +2,18 @@ import lightconf
 import s7
 
 class Light:
+    STATUS_DB = 12
+    TIMEOUT_DB = 15
+
+    TOGGLE_BIT = 5          # write only
+    STATUS_BIT = 6          # read only
+    MOTION_TRIGGER_BIT = 7  # read/write
+    BLINK_ON_MOTION_BIT = 8 # read/write
+
     def __init__(self, name, id, s7conn):
         self._name = name
         self._id = id
         self._s7conn = s7conn
-
-        self.STATUS_DB = 12
-        self.TIMEOUT_DB = 15
-
-        self.TOGGLE_BIT = 5          # write only
-        self.STATUS_BIT = 6          # read only
-        self.MOTION_TRIGGER_BIT = 7  # read/write
-        self.BLINK_ON_MOTION_BIT = 8 # read/write
 
     def getName(self):
         return self._name
@@ -49,6 +49,10 @@ class Light:
             val = 1
         #return self._s7conn.writeBit(self.STATUS_DB, self._id, self.BLINK_ON_MOTION_BIT, val)
         return False
+
+def AllOff(s7conn):
+    #return s7conn.writeBit(Light.STATUS_DB, 0, 1)
+    return None
 
 def loadGroupNames():
     groupNames = []
