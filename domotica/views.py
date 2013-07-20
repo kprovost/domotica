@@ -5,8 +5,10 @@ import s7
 
 import light
 
+PLC_IP = "10.0.3.9"
+
 def index(request):
-    s7conn = s7.S7Comm("10.0.3.9")
+    s7conn = s7.S7Comm(PLC_IP)
 
     lights = light.loadAll(s7conn)
     context = { 'lights' : lights }
@@ -14,7 +16,7 @@ def index(request):
 
 @csrf_exempt
 def lightswitch(request, action):
-    s7conn = s7.S7Comm("10.0.3.9")
+    s7conn = s7.S7Comm(PLC_IP)
     l = light.Light("", request.REQUEST["id"], s7conn)
 
     if action != "toggle":
