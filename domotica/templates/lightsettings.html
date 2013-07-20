@@ -18,29 +18,30 @@
 
         <script src="static/domotica.js"></script>
 
-        <title>Domotica</title>
+        <title>Settings</title>
     </head>
     <body>
 {% load staticfiles %}
 
 <header class="bar-title">
-<h1 class="title">Domotica</h1>
+<a class="button-prev" href="{% url 'index' %}">
+    Terug
+</a>
+<h1 class="title">LIGHT NAME HERE</h1>
 </header>
 
 <div class="content">
 
 <ul class="list">
-{% for light in lights %}
-<li>
-    <a href="light/settings/{{ light.getID }}" data-transition="slide-in">
-        {{ light.getName }}
-    </a>
-
-    <div id="light_{{ light.getID }}" class="toggle {% if light.isOn %}active{% endif %}">
-        <div class="toggle-handle"></div>
-    </div>
-</li>
-{% endfor %}
+    <li>
+        Bewegingsdetector
+    </li>
+    <li>
+        Knipperen bij alarm
+    </li>
+    <li>
+        Timeout
+    </li>
 </ul>
 </div>
 

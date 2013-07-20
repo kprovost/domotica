@@ -26,3 +26,6 @@ def lightswitch(request, action):
         raise Http404
 
     return HttpResponse()
+
+def lightsettings(request, id):
+    return render(request, "lightsettings.html")
