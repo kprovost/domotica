@@ -28,6 +28,15 @@ function toggle_blink()
             });
 };
 
+function all_off()
+{
+    console.log("All lights off");
+    $.post("/lightswitch/all_off")
+        .fail(function(){
+                console.log("Failed to turn all lights off");
+            });
+};
+
 function installPostHandlers() {
     $(".light").each(function(index) {
         obj = $(".light")[index];
@@ -43,6 +52,8 @@ function installPostHandlers() {
         obj = $(".blink")[index];
         document.querySelector("#" + obj.id).addEventListener('toggle', toggle_blink);
     });
+
+    document.querySelector("#all_off").addEventListener('touchend', all_off);
 };
 
 $(document).ready(function () {
