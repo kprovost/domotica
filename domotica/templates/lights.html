@@ -32,7 +32,7 @@
 <ul class="list">
 {% for light in lights %}
 <li>
-    <a href="light/settings/{{ light.getID }}" data-transition="slide-in">
+    <a href="{% url 'lightsettings' light.getID %}" data-transition="slide-in">
         {{ light.getName }}
     </a>
 
