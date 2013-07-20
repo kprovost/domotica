@@ -11,7 +11,7 @@
     <li>
         Knipperen bij alarm
 
-        <div id="blink_{{ light.getID }}" class="blink toggle {% if light.isActivatedByMotion %}active{% endif %}">
+        <div id="blink_{{ light.getID }}" class="blink toggle {% if light.blinkOnAlarm %}active{% endif %}">
             <div class="toggle-handle"></div>
         </div>
     </li>
