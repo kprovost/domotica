@@ -3,9 +3,17 @@
 <ul class="list">
     <li>
         Bewegingsdetector
+
+        <div id="motion_{{ light.getID }}" class="motion toggle {% if light.isActivatedByMotion %}active{% endif %}">
+            <div class="toggle-handle"></div>
+        </div>
     </li>
     <li>
         Knipperen bij alarm
+
+        <div id="blink_{{ light.getID }}" class="blink toggle {% if light.isActivatedByMotion %}active{% endif %}">
+            <div class="toggle-handle"></div>
+        </div>
     </li>
     <li>
         Timeout
