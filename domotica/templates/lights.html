@@ -1,33 +1,4 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        <link rel="apple-touch-icon" href="static/apple-touch-icon-114x114.png"/>
-
-        <link rel="apple-touch-startup-image" href="startup.png" />
-
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"> </script>
-
-        <!--- Ratchet, HTML5/CSS/Javascript fob with iPhone-like widgets
-              http://maker.github.io/ratchet/  -->
-        <link rel="stylesheet" href="static/ratchet.css">
-        <script src="static/ratchet.js"></script>
-
-        <script src="static/domotica.js"></script>
-
-        <title>Domotica</title>
-    </head>
-    <body>
-{% load staticfiles %}
-
-<header class="bar-title">
-<h1 class="title">Domotica</h1>
-</header>
-
-<div class="content">
+{% include "header.html" with title="Domotica" %}
 
 <ul class="list">
 {% for light in lights %}
@@ -42,7 +13,5 @@
 </li>
 {% endfor %}
 </ul>
-</div>
 
-    </body>
-</html>
+{% include "footer.html" %}
