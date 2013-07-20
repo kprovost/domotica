@@ -8,10 +8,20 @@ import light
 PLC_IP = "10.0.3.9"
 
 def index(request):
-    s7conn = s7.S7Comm(PLC_IP)
+    groups = light.loadGroupNames()
+    context = { 'groups' : groups }
+    return render(request, "lightgroups.html", context)
 
-    lights = light.loadAll(s7conn)
-    context = { 'lights' : lights }
+def lightgroup(request, groupName):
+    s7conn = s7.S7Comm(PLC_IP)
+    lights = light.loadGroup(s7conn, groupName)
+    if lights is None:
+        raise Http404
+
+    context = {
+            'groupName': groupName,
+            'lights' : lights
+            }
     return render(request, "lights.html", context)
 
 @csrf_exempt

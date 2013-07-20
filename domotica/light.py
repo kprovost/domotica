@@ -50,15 +50,29 @@ class Light:
         #return self._s7conn.writeBit(self.STATUS_DB, self._id, self.BLINK_ON_MOTION_BIT, val)
         return False
 
-def loadAll(s7conn):
-    lights = [ ]
-    for name, id in lightconf.lights:
-        l = Light(name, id, s7conn)
-        lights.append(l)
-    return lights
+def loadGroupNames():
+    groupNames = []
+    for group in lightconf.groups:
+        groupNames.append(group.getName())
+    return groupNames
+
+def loadGroup(s7conn, groupName):
+    for group in lightconf.groups:
+        if group.getName() != groupName:
+            continue
+
+        lights = []
+        for name, id in group.getLights():
+            l = Light(name, id, s7conn)
+            lights.append(l)
+        return lights
+
+    return None
 
 def loadByID(s7conn, searchId):
-    for name, id in lightconf.lights:
-        if id == searchId:
-            return Light(name, id, s7conn)
+    for group in lightconf.groups:
+        res = group.getLightByID(searchId)
+        if res is None:
+            continue
+        return Light(res[0], res[1], s7conn)
     return None
