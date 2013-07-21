@@ -5,7 +5,7 @@ class Light:
     STATUS_DB = 12
     TIMEOUT_DB = 15
 
-    TOGGLE_BIT = 5          # write only
+    TOGGLE_LIGHT_BIT = 5    # write only
     STATUS_BIT = 6          # read only
     MOTION_TRIGGER_BIT = 7  # read/write
     BLINK_ON_MOTION_BIT = 8 # read/write
@@ -34,7 +34,8 @@ class Light:
         return 10
 
     def toggleLight(self):
-        return False
+        self._s7conn.writeBit(self.STATUS_DB, self._id, self.TOGGLE_LIGHT_BIT, 1)
+        return self._s7conn.writeBit(self.STATUS_DB, self._id, self.TOGGLE_LIGHT_BIT, 0)
 
     def toggleMotion(self):
         val = 0
