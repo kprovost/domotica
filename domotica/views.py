@@ -26,15 +26,15 @@ def lightgroup(request, groupName):
 
 @csrf_exempt
 def lightswitch(request, action):
+    s7conn = s7.S7Comm(PLC_IP)
     if action == "all_off":
-        s7conn = s7.S7Comm(PLC_IP)
         if not light.AllOff(s7conn):
             raise Http404
         return HttpResponse()
 
     idInt = 0
     try:
-        idInt = int(id)
+        idInt = int(request.REQUEST["id"])
     except:
         raise Http404
 
