@@ -35,7 +35,8 @@ class Light:
 
     def toggleLight(self):
         self._s7conn.writeBit(self.STATUS_DB, self._id, self.TOGGLE_LIGHT_BIT, 1)
-        return self._s7conn.writeBit(self.STATUS_DB, self._id, self.TOGGLE_LIGHT_BIT, 0)
+        self._s7conn.writeBit(self.STATUS_DB, self._id, self.TOGGLE_LIGHT_BIT, 0)
+        return True
 
     def toggleMotion(self):
         val = 0
