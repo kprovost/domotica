@@ -52,8 +52,8 @@ class Light:
         return False
 
 def AllOff(s7conn):
-    #return s7conn.writeBit(Light.STATUS_DB, 0, 1)
-    return None
+    s7conn.writeBit(Light.STATUS_DB, 0, 0, 1)
+    return s7conn.writeBit(Light.STATUS_DB, 0, 0, 0)
 
 def loadGroupNames():
     groupNames = []
