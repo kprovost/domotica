@@ -39,18 +39,18 @@ class Light:
         return True
 
     def toggleMotion(self):
-        val = 0
+        val = 1
         if self.isActivatedByMotion():
-            val = 1
-        #return self._s7conn.writeBit(self.STATUS_DB, self._id, self.MOTION_TRIGGER_BIT, val)
-        return False
+            val = 0
+        self._s7conn.writeBit(self.STATUS_DB, self._id, self.MOTION_TRIGGER_BIT, val)
+        return True
 
     def toggleBlinkOnAlarm(self):
-        val = 0
+        val = 1
         if self.blinkOnAlarm():
-            val = 1
-        #return self._s7conn.writeBit(self.STATUS_DB, self._id, self.BLINK_ON_MOTION_BIT, val)
-        return False
+            val = 0
+        self._s7conn.writeBit(self.STATUS_DB, self._id, self.BLINK_ON_MOTION_BIT, val)
+        return True
 
 def AllOff(s7conn):
     s7conn.writeBit(Light.STATUS_DB, 0, 0, 1)
