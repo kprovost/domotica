@@ -53,7 +53,7 @@ function installPostHandlers() {
         document.querySelector("#" + obj.id).addEventListener('toggle', toggle_blink);
     });
 
-    document.querySelector("#all_off").addEventListener('touchend', all_off);
+    document.querySelector("#all_off").addEventListener('touched', all_off);
 };
 
 $(document).ready(function () {
