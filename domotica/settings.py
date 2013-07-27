@@ -47,6 +47,10 @@ USE_TZ = True
 # Login URL
 LOGIN_URL = '/login'
 
+# Allow Javascript to muck about with our session cookie, because we need to
+# store the session ID in the local storage
+SESSION_COOKIE_HTTPONLY = None
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
 MEDIA_ROOT = ''

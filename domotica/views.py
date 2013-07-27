@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
+from django.conf import settings
 import s7
 
 import light
