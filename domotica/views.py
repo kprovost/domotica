@@ -1,17 +1,39 @@
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
+from django.conf import settings
 import s7
 
 import light
 
 PLC_IP = "10.0.3.9"
 
+@login_required
 def index(request):
     groups = light.loadGroupNames()
     context = { 'groups' : groups }
     return render(request, "lightgroups.html", context)
 
+def do_login(request):
+    try:
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is None:
+            raise
+
+        if not user.is_active:
+            raise
+
+        login(request, user)
+        # Redirect to a success page.
+        return index(request)
+    except Exception as e:
+        return render(request, "login.html")
+
+@login_required
 def lightgroup(request, groupName):
     s7conn = s7.S7Comm(PLC_IP)
     lights = light.loadGroup(s7conn, groupName)
@@ -25,6 +47,7 @@ def lightgroup(request, groupName):
     return render(request, "lights.html", context)
 
 @csrf_exempt
+@login_required
 def lightswitch(request, action):
     s7conn = s7.S7Comm(PLC_IP)
     if action == "all_off":
@@ -54,6 +77,7 @@ def lightswitch(request, action):
 
     return HttpResponse()
 
+@login_required
 def lightsettings(request, id):
     idInt = 0
     try:

@@ -10,7 +10,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = { }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'domotica.sqlite3',                      # Or path to database file if using sqlite3.
+    }
+}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -38,6 +43,13 @@ USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
+
+# Login URL
+LOGIN_URL = '/login'
+
+# Allow Javascript to muck about with our session cookie, because we need to
+# store the session ID in the local storage
+SESSION_COOKIE_HTTPONLY = None
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
