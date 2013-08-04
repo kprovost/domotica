@@ -93,3 +93,15 @@ def lightsettings(request, id):
 
     context = { 'light': l }
     return render(request, "lightsettings.html", context)
+
+@login_required
+def alarm(request):
+    return render(request, "alarm.html")
+
+@login_required
+def power(request):
+    return render(request, "power.html")
+
+@login_required
+def heating(request):
+    return render(request, "heating.html")
