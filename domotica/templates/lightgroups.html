@@ -1,12 +1,15 @@
 {% include "header.html" with title="Lichten" %}
 
 <ul class="list">
-{% for group in groups %}
+{% for group, count in groups %}
 <li>
     <a href="{% url 'lightgroup' group %}" data-transition="slide-in">
         {{ group }}
     </a>
     <span class="chevron"></span>
+    {% if count %}
+        <span class="count">{{ count }}</span>
+    {% endif %}
 </li>
 {% endfor %}
 <li>

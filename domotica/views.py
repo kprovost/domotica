@@ -10,9 +10,23 @@ import light
 
 PLC_IP = "10.0.3.9"
 
+def _lightCount(s7conn, groupName):
+    lights = light.loadGroup(s7conn, groupName)
+
+    onCount = 0
+    for l in lights:
+        if l.isOn():
+            onCount = onCount + 1
+
+    return onCount
+
 @login_required
 def index(request):
+    s7conn = s7.S7Comm(PLC_IP)
+
     groups = light.loadGroupNames()
+    groups = map(lambda x: (x, _lightCount(s7conn, x)), groups)
+
     context = { 'groups' : groups }
     return render(request, "lightgroups.html", context)
 
