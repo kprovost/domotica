@@ -37,6 +37,11 @@ function all_off()
             });
 };
 
+function refresh()
+{
+    document.location.reload(true);
+};
+
 function installPostHandlers() {
     $(".light").each(function(index) {
         obj = $(".light")[index];
@@ -53,7 +58,8 @@ function installPostHandlers() {
         document.querySelector("#" + obj.id).addEventListener('toggle', toggle_blink);
     });
 
-    document.querySelector("#all_off").addEventListener('touched', all_off);
+    document.querySelector("#all_off").addEventListener('touchend', all_off);
+    document.querySelector("#refresh").addEventListener('touchend', refresh);
 };
 
 function readCookie(name) {
