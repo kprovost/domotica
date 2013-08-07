@@ -13,6 +13,10 @@ urlpatterns = patterns('',
     url(r'^lightswitch/(?P<action>.*)', 'domotica.views.lightswitch', name='lightswitch'),
     url(r'^light/settings/(?P<id>\d+)$', 'domotica.views.lightsettings', name='lightsettings'),
 
+    url(r'^alarm$', 'domotica.views.alarm', name='alarm'),
+    url(r'^power$', 'domotica.views.power', name='power'),
+    url(r'^heating$', 'domotica.views.heating', name='heating'),
+
     # Examples:
     # url(r'^$', 'domotica.views.home', name='home'),
     # url(r'^domotica/', include('domotica.foo.urls')),
