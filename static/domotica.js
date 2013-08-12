@@ -34,6 +34,7 @@ function all_off()
     $.post("/lightswitch/all_off")
         .fail(function(){
                 console.log("Failed to turn all lights off");
+                location.reload();
             });
 };
 
