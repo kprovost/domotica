@@ -33,7 +33,7 @@ groups = [
                 ( "Inkomhal 3", 18 ),
                 ( "Vestiaire", 20 ),
                 ( "Overloop 1ste", 30 ),
-                ( "Wachthal 1ste", 42 ),
+                ( "Nachthal 1ste", 42 ),
                 ( "Overloop 2de", 56 ),
             ]),
         LightGroup("Living",
