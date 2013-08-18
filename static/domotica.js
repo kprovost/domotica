@@ -38,6 +38,25 @@ function all_off()
             });
 };
 
+function timeout_select()
+{
+    console.log("Update light timeout");
+
+    $( "select option:selected" ).each(function() {
+        timeout = $(this).val();
+    });
+
+    $(".timeout_select").each(function(index) {
+        obj = $(".timeout_select")[index];
+        id = obj.id.replace("timeout_", "");
+    });
+
+    $.post("/lightswitch/timeout", { id: id, timeout: timeout })
+        .fail(function() {
+            console.log("Failed to update timeout for " + id);
+            location.reload();
+        });
+}
 function refresh()
 {
     document.location.reload(true);
@@ -58,6 +77,8 @@ function installPostHandlers() {
         obj = $(".blink")[index];
         document.querySelector("#" + obj.id).addEventListener('toggle', toggle_blink);
     });
+
+    $('.timeout_select').change(timeout_select);
 
     document.querySelector("#all_off").addEventListener('touchend', all_off);
     document.querySelector("#refresh").addEventListener('touchend', refresh);

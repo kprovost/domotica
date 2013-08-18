@@ -17,6 +17,15 @@
     </li>
     <li>
         Timeout
+
+        <select id="timeout_{{ light.getID }}" class="timeout_select">
+            {% for pretty, value, isSelected in light.getPossibleTimeouts %}
+                <option value="{{ value }}"
+                    {% if isSelected %}selected{% endif %}>
+                    {{ pretty }}
+                </option>
+            {% endfor %}
+        </select>
     </li>
 </ul>
 

@@ -86,6 +86,13 @@ def lightswitch(request, action):
     elif action == "toggle_blink":
         if not l.toggleBlinkOnAlarm():
             raise Http404
+    elif action == "timeout":
+        timeout = 0
+        try:
+            timeout = int(request.REQUEST["timeout"])
+        except:
+            raise Http404
+        l.setTimeout(timeout)
     else:
         raise Http404
 

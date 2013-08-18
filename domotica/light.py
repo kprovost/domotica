@@ -14,6 +14,7 @@ class Light:
         self._name = name
         self._id = id
         self._s7conn = s7conn
+        self._currentTimeout = None
 
     def getName(self):
         return self._name
@@ -31,7 +32,27 @@ class Light:
         return self._s7conn.readBit(self.STATUS_DB, self._id, self.BLINK_ON_MOTION_BIT)
 
     def getTimeout(self):
-        return 10
+        if self._currentTimeout is None:
+            self._currentTimeout = self._s7conn.readUInt16(self.TIMEOUT_DB, self._id)
+        return self._currentTimeout
+
+    def setTimeout(self, timeout):
+        if timeout < 0 or timeout > 9990:
+            raise "Invalid timeout"
+        self._currentTimeout = timeout
+        return self._s7conn.writeUInt16(self.TIMEOUT_DB, self._id, timeout)
+
+    def getPossibleTimeouts(self):
+        values = [ ]
+        for i in range(0, 9990, 30):
+            if (i < 60):
+                pretty = "%s s" % i
+            else:
+                pretty = "%s m %s s" % (i / 60, i % 60)
+
+            isSelected = (i == self.getTimeout())
+            values.append((pretty, i, isSelected))
+        return values
 
     def toggleLight(self):
         self._s7conn.writeBit(self.STATUS_DB, self._id, self.TOGGLE_LIGHT_BIT, 1)
