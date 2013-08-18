@@ -1,3 +1,14 @@
 {% include "header.html" with title="Verwarming" %}
 
+<div class="input-group">
+    <div class="input-row">
+        <label>Setpunt temperatuur</label>
+        {{ heating.getSetPoint }}C
+    </div>
+    <div class="input-row">
+        <label>Actuele temperatuur</label>
+        {{ heating.getCurrent }}C
+    </div>
+</div>
+
 {% include "footer.html" %}

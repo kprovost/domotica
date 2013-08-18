@@ -7,6 +7,7 @@ from django.conf import settings
 import s7
 
 import light
+from heating import Heating
 
 PLC_IP = "10.0.3.9"
 
@@ -126,4 +127,8 @@ def power(request):
 
 @login_required
 def heating(request):
-    return render(request, "heating.html")
+    s7conn = s7.S7Comm(PLC_IP)
+    h = Heating(s7conn)
+
+    context = { 'heating': h }
+    return render(request, "heating.html", context)
