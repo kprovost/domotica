@@ -1258,3 +1258,15 @@ select {
   -webkit-transform: translate3d(100%, 0, 0);
           transform: translate3d(100%, 0, 0);
 }
+
+/* Custom additions
+-------------------------------------------------- */
+
+.label {
+  font-weight: bold;
+}
+
+.value {
+  position: absolute;
+  right: 10px;
+}
