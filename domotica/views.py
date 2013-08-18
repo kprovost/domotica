@@ -78,6 +78,7 @@ def lightswitch(request, action):
     l = light.Light("", idInt, s7conn)
 
     if action == "toggle":
+        print ("Light %d toggled by %s" % (l.getID(), request.META.get('REMOTE_ADDR')))
         if not l.toggleLight():
             raise Http404
     elif action == "toggle_motion":
