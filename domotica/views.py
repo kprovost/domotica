@@ -7,6 +7,8 @@ from django.conf import settings
 import s7
 
 import light
+from alarm import Alarm
+from heating import Heating
 
 PLC_IP = "10.0.3.9"
 
@@ -78,6 +80,7 @@ def lightswitch(request, action):
     l = light.Light("", idInt, s7conn)
 
     if action == "toggle":
+        print ("Light %d toggled by %s" % (l.getID(), request.META.get('REMOTE_ADDR')))
         if not l.toggleLight():
             raise Http404
     elif action == "toggle_motion":
@@ -86,6 +89,13 @@ def lightswitch(request, action):
     elif action == "toggle_blink":
         if not l.toggleBlinkOnAlarm():
             raise Http404
+    elif action == "timeout":
+        timeout = 0
+        try:
+            timeout = int(request.REQUEST["timeout"])
+        except:
+            raise Http404
+        l.setTimeout(timeout)
     else:
         raise Http404
 
@@ -110,7 +120,23 @@ def lightsettings(request, id):
 
 @login_required
 def alarm(request):
-    return render(request, "alarm.html")
+    s7conn = s7.S7Comm(PLC_IP)
+    a = Alarm(s7conn)
+    context = { 'alarm': a }
+    return render(request, "alarm.html", context)
+
+@csrf_exempt
+@login_required
+def alarm_action(request, action):
+    print "alarm_action"
+    s7conn = s7.S7Comm(PLC_IP)
+    a = Alarm(s7conn)
+    if action == 'arm':
+        a.arm()
+    elif action == 'disarm':
+        a.disarm()
+    context = { 'alarm': a }
+    return render(request, "alarm.html", context)
 
 @login_required
 def power(request):
@@ -118,4 +144,8 @@ def power(request):
 
 @login_required
 def heating(request):
-    return render(request, "heating.html")
+    s7conn = s7.S7Comm(PLC_IP)
+    h = Heating(s7conn)
+
+    context = { 'heating': h }
+    return render(request, "heating.html", context)

@@ -34,9 +34,49 @@ function all_off()
     $.post("/lightswitch/all_off")
         .fail(function(){
                 console.log("Failed to turn all lights off");
+                location.reload();
             });
 };
 
+function alarm_disarm()
+{
+    console.log("Disarm alarm");
+    $.post("/alarm_action/disarm")
+        .fail(function(){
+            console.log("Failed to disarm alarm");
+            location.reload();
+        });
+};
+
+function alarm_arm()
+{
+    console.log("Arm alarm");
+    $.post("/alarm_action/arm")
+        .fail(function(){
+            console.log("Failed to arm alarm");
+            location.reload();
+        });
+};
+
+function timeout_select()
+{
+    console.log("Update light timeout");
+
+    $( "select option:selected" ).each(function() {
+        timeout = $(this).val();
+    });
+
+    $(".timeout_select").each(function(index) {
+        obj = $(".timeout_select")[index];
+        id = obj.id.replace("timeout_", "");
+    });
+
+    $.post("/lightswitch/timeout", { id: id, timeout: timeout })
+        .fail(function() {
+            console.log("Failed to update timeout for " + id);
+            location.reload();
+        });
+}
 function refresh()
 {
     document.location.reload(true);
@@ -58,8 +98,16 @@ function installPostHandlers() {
         document.querySelector("#" + obj.id).addEventListener('toggle', toggle_blink);
     });
 
-    document.querySelector("#all_off").addEventListener('touchend', all_off);
-    document.querySelector("#refresh").addEventListener('touchend', refresh);
+    $('.timeout_select').change(timeout_select);
+
+    if (document.querySelector("#all_off"))
+        document.querySelector("#all_off").addEventListener('touchend', all_off);
+    if (document.querySelector("#refresh"))
+        document.querySelector("#refresh").addEventListener('touchend', refresh);
+    if (document.querySelector("#alarm_disarm"))
+        document.querySelector("#alarm_disarm").addEventListener('touchend', alarm_disarm);
+    if (document.querySelector("#alarm_arm"))
+        document.querySelector("#alarm_arm").addEventListener('touchend', alarm_arm);
 };
 
 function readCookie(name) {

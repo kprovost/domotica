@@ -12,8 +12,8 @@ urlpatterns = patterns('',
     url(r'^lightgroup/(?P<groupName>.*)', 'domotica.views.lightgroup', name='lightgroup'),
     url(r'^lightswitch/(?P<action>.*)', 'domotica.views.lightswitch', name='lightswitch'),
     url(r'^light/settings/(?P<id>\d+)$', 'domotica.views.lightsettings', name='lightsettings'),
-
     url(r'^alarm$', 'domotica.views.alarm', name='alarm'),
+    url(r'^alarm_action/(?P<action>.*)$', 'domotica.views.alarm_action', name='alarm_action'),
     url(r'^power$', 'domotica.views.power', name='power'),
     url(r'^heating$', 'domotica.views.heating', name='heating'),
 

@@ -1,3 +1,35 @@
 {% include "header.html" with title="Verwarming" %}
 
+<ul class="list">
+    <li class="list-divider">Temperatuur</li>
+    <li>
+        <div class="label">Actuele temperatuur</div>
+        <div class="value">{{ heating.getCurrent|stringformat:".1f" }}C</div>
+    </li>
+    <li>
+        <div class="label">Setpunt temperatuur</div>
+        <div class="value">{{ heating.getSetPoint|stringformat:".1f" }}C</div>
+    </li>
+    <li class="list-divider">Controle</li>
+    <li>
+        HAND - AAN
+        <div id="heating_force_on" class="toggle {% if light.isForcedOn %}active{% endif %}">
+            <div class="toggle-handle"></div>
+        </div>
+    </li>
+    <li>
+        AUTO
+        <div id="heating_auto" class="toggle {% if light.isModeAuto %}active{% endif %}">
+            <div class="toggle-handle"></div>
+        </div>
+    </li>
+    <li>
+        Current State
+        <div id="heating_auto" class="toggle {% if light.isOn %}active{% endif %}">
+            <div class="toggle-handle"></div>
+        </div>
+    </li>
+    <li>
+    </li>
+</ul>
 {% include "footer.html" %}
