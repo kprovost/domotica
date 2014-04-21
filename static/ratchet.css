@@ -1270,3 +1270,10 @@ select {
   position: absolute;
   right: 10px;
 }
+
+.alarm {
+  font-weight: bold;
+  color: #f00;
+  font-size: 400%;
+  text-align: center;
+}
