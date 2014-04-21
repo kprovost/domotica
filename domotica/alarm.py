@@ -8,13 +8,13 @@ class Alarm:
 
     def arm(self):
         # Toggle bit
-        self._s7con.writeBit(self.ALARM_DB, 0, 1, 1)
-        self._s7con.writeBit(self.ALARM_DB, 0, 1, 0)
+        self._s7conn.writeBit(self.ALARM_DB, 0, 1, 1)
+        self._s7conn.writeBit(self.ALARM_DB, 0, 1, 0)
 
     def disarm(self):
         # Toggle bit
-        self._s7con.writeBit(self.ALARM_DB, 0, 2, 1)
-        self._s7con.writeBit(self.ALARM_DB, 0, 2, 0)
+        self._s7conn.writeBit(self.ALARM_DB, 0, 2, 1)
+        self._s7conn.writeBit(self.ALARM_DB, 0, 2, 0)
 
     def isArmed(self):
         return False
