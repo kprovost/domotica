@@ -21,4 +21,5 @@ class Heating:
         return self._s7conn.readFlagBit(2, 3)
 
     def isOn(self):
-        return self._s7conn.readOutput(4, 4)
+        #return self._s7conn.readOutput(4, 4)
+        return False
