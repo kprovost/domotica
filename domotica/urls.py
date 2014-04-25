@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^power$', 'domotica.views.powerplug', name='power'),
     url(r'^powerplug/(?P<action>.*)', 'domotica.views.powerswitch', name='powerswitch'),
     url(r'^heating$', 'domotica.views.heating', name='heating'),
+    url(r'^heating/toggle/(?P<id>.*)', 'domotica.views.heatingtoggle', name='heatingtoggle'),
 
     # Examples:
     # url(r'^$', 'domotica.views.home', name='home'),

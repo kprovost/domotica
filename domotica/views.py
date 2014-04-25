@@ -180,3 +180,21 @@ def heating(request):
 
     context = { 'heating': h }
     return render(request, "heating.html", context)
+
+@csrf_exempt
+@login_required
+def heatingtoggle(request, ID):
+    s7conn = s7.S7Comm(PLC_IP)
+    h = Heating(s7conn)
+
+    if h == "force_on":
+        h.toggleForceOn()
+    elif h == "auto":
+        h.toggleAuto()
+    elif h == "state":
+        # Read only variable. Do nothing
+        pass
+    else:
+        raise Http404
+
+    return HttpResponse()

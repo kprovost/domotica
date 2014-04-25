@@ -13,19 +13,19 @@
     <li class="list-divider">Controle</li>
     <li>
         HAND - AAN
-        <div id="heating_force_on" class="toggle {% if heating.isForcedOn %}active{% endif %}">
+        <div id="heating_force_on" class="heating toggle {% if heating.isForcedOn %}active{% endif %}">
             <div class="toggle-handle"></div>
         </div>
     </li>
     <li>
         AUTO
-        <div id="heating_auto" class="toggle {% if heating.isModeAuto %}active{% endif %}">
+        <div id="heating_auto" class="heating toggle {% if heating.isModeAuto %}active{% endif %}">
             <div class="toggle-handle"></div>
         </div>
     </li>
     <li>
         Current State
-        <div id="heating_auto" class="toggle {% if heating.isOn %}active{% endif %}">
+        <div id="heating_state" class="heating toggle {% if heating.isOn %}active{% endif %}">
             <div class="toggle-handle"></div>
         </div>
     </li>
