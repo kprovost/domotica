@@ -1,3 +1,15 @@
 {% include "header.html" with title="Stopcontacten" %}
 
+<ul class="list">
+{% for plug in powerplugs %}
+<li>
+    <a >{{ plug.getName }}</a>
+
+    <div id="plug_{{ plug.getID }}" class="powerplug toggle {% if plug.isOn %}active{% endif %}">
+        <div class="toggle-handle"></div>
+    </div>
+</li>
+{% endfor %}
+</ul>
+
 {% include "footer.html" %}

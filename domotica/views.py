@@ -9,6 +9,7 @@ import s7
 import light
 from alarm import Alarm
 from heating import Heating
+import power
 
 PLC_IP = "10.0.3.9"
 
@@ -139,8 +140,38 @@ def alarm_action(request, action):
     return render(request, "alarm.html", context)
 
 @login_required
-def power(request):
-    return render(request, "power.html")
+def powerplug(request):
+    s7conn = s7.S7Comm(PLC_IP)
+
+    plugs = power.getPlugs(s7conn)
+    if power is None:
+        raise Http404
+
+    context = { 'powerplugs': plugs }
+    return render(request, "power.html", context)
+
+@csrf_exempt
+@login_required
+def powerswitch(request, action):
+    s7conn = s7.S7Comm(PLC_IP)
+
+    idInt = 0
+    try:
+        idInt = int(request.REQUEST["id"])
+    except:
+        raise Http404
+
+    plug = power.getPlug(idInt, s7conn)
+
+    if action == "toggle":
+        print ("Power plug %s toggled by %s" % (plug.getName(),
+            request.META.get('REMOTE_ADDR')))
+        if not plug.togglePower():
+            raise Http404
+    else:
+        raise Http404
+
+    return HttpResponse()
 
 @login_required
 def heating(request):

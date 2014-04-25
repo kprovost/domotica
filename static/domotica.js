@@ -1,3 +1,13 @@
+function toggle_power()
+{
+    id = this.id.replace("plug_", "");
+    $.post("/powerplug/toggle", { id: id })
+        .fail(function(){
+                console.log("Failed to post powerplug/toggle " + id);
+                location.reload();
+            });
+}
+
 function toggle_light()
 {
     id = this.id.replace("light_", "");
@@ -86,6 +96,11 @@ function installPostHandlers() {
     $(".light").each(function(index) {
         obj = $(".light")[index];
         document.querySelector('#' + obj.id).addEventListener('toggle', toggle_light);
+    });
+
+    $(".powerplug").each(function(index) {
+        obj = $(".powerplug")[index];
+        document.querySelector('#' + obj.id).addEventListener('toggle', toggle_power);
     });
 
     $(".motion").each(function(index) {
