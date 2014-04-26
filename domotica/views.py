@@ -181,11 +181,11 @@ def heatingtoggle(request, ID):
     s7conn = s7.S7Comm(PLC_IP)
     h = Heating(s7conn)
 
-    if h == "force_on":
+    if ID == "force_on":
         h.toggleForceOn()
-    elif h == "auto":
+    elif ID == "auto":
         h.toggleAuto()
-    elif h == "state":
+    elif ID == "state":
         # Read only variable. Do nothing
         pass
     else:
