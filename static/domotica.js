@@ -111,7 +111,7 @@ function installPostHandlers() {
 
     $(".heating").each(function(index) {
         obj = $(".heating")[index];
-        document.querySelector('#' + obj.id).addEventListener('toggle', toggle_power);
+        document.querySelector('#' + obj.id).addEventListener('toggle', heating_change);
     });
 
     $(".light").each(function(index) {
