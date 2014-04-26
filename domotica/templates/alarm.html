@@ -1,6 +1,12 @@
 {% include "header.html" with title="Alarm" %}
 
 <ul class="list">
+    {% if alarm.isAlarmTriggered %}
+    <li>
+        <div class="alarm">ALARM</div>
+    </li>
+    {% endif %}
+
     <li>
         Alarm <a id="alarm_disarm" class="button-positive">uit</a>
     </li>
@@ -11,11 +17,6 @@
     <li>
         Status: {% if alarm.isArmed %}Op scherp{% else %}Uit{% endif %}
     </li>
-    {% if alarm.isAlarmTriggered %}
-    <li>
-        <b>ALARM</b>
-    </li>
-    {% endif %}
 </ul>
 
 {% include "footer.html" %}

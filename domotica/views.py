@@ -9,6 +9,7 @@ import s7
 import light
 from alarm import Alarm
 from heating import Heating
+import power
 
 PLC_IP = "10.0.3.9"
 
@@ -139,8 +140,32 @@ def alarm_action(request, action):
     return render(request, "alarm.html", context)
 
 @login_required
-def power(request):
-    return render(request, "power.html")
+def powerplug(request):
+    s7conn = s7.S7Comm(PLC_IP)
+
+    plugs = power.getPlugs(s7conn)
+    if power is None:
+        raise Http404
+
+    context = { 'powerplugs': plugs }
+    return render(request, "power.html", context)
+
+@csrf_exempt
+@login_required
+def powerswitch(request, action, ID):
+    s7conn = s7.S7Comm(PLC_IP)
+
+    plug = power.getPlug(int(ID), s7conn)
+
+    if action == "toggle":
+        print ("Power plug %s toggled by %s" % (plug.getName(),
+            request.META.get('REMOTE_ADDR')))
+        if not plug.togglePower():
+            raise Http404
+    else:
+        raise Http404
+
+    return HttpResponse()
 
 @login_required
 def heating(request):
@@ -149,3 +174,21 @@ def heating(request):
 
     context = { 'heating': h }
     return render(request, "heating.html", context)
+
+@csrf_exempt
+@login_required
+def heatingtoggle(request, ID):
+    s7conn = s7.S7Comm(PLC_IP)
+    h = Heating(s7conn)
+
+    if ID == "force_on":
+        h.toggleForceOn()
+    elif ID == "auto":
+        h.toggleAuto()
+    elif ID == "state":
+        # Read only variable. Do nothing
+        pass
+    else:
+        raise Http404
+
+    return HttpResponse()

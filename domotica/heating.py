@@ -21,4 +21,19 @@ class Heating:
         return self._s7conn.readFlagBit(2, 3)
 
     def isOn(self):
-        return self._s7conn.readOutput(4, 4)
+        #return self._s7conn.readOutput(4, 4)
+        return False
+
+    def toggleForceOn(self):
+        val = 0
+        if not self.isForcedOn():
+            val = 1
+        print "toggleForceOn"
+        #self._s7conn.writeFlagBit(2, 3, val)
+
+    def toggleAuto(self):
+        val = 0
+        if not self.isModeAuto():
+            val = 1
+        print "toggleAuto"
+        #self._s7conn.writeFlagBit(2, 4, val)

@@ -14,8 +14,10 @@ urlpatterns = patterns('',
     url(r'^light/settings/(?P<id>\d+)$', 'domotica.views.lightsettings', name='lightsettings'),
     url(r'^alarm$', 'domotica.views.alarm', name='alarm'),
     url(r'^alarm_action/(?P<action>.*)$', 'domotica.views.alarm_action', name='alarm_action'),
-    url(r'^power$', 'domotica.views.power', name='power'),
+    url(r'^power$', 'domotica.views.powerplug', name='power'),
+    url(r'^powerplug/(?P<action>.*)/(?P<ID>.*)', 'domotica.views.powerswitch', name='powerswitch'),
     url(r'^heating$', 'domotica.views.heating', name='heating'),
+    url(r'^heating/toggle/(?P<ID>.*)', 'domotica.views.heatingtoggle', name='heatingtoggle'),
 
     # Examples:
     # url(r'^$', 'domotica.views.home', name='home'),

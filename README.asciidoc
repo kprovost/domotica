@@ -3,3 +3,6 @@ Domotica
 
 A simple webapp for a home automation system based around a Siemens S7-300 PLC,
 using libs7comm-python. It's intended to be used from smartphones.
+
+Note that this is not a generic solution. It's an implementation for one
+specific house.

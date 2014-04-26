@@ -1,3 +1,23 @@
+function toggle_power()
+{
+    id = this.id.replace("plug_", "");
+    $.post("/powerplug/toggle/" + id)
+        .fail(function(){
+                console.log("Failed to post powerplug/toggle " + id);
+                location.reload();
+            });
+}
+
+function heating_change()
+{
+    id = this.id.replace("heating_", "");
+    $.post("/heating/toggle/" + id)
+        .fail(function(){
+                console.log("Failed to post /heating/toggle " + id);
+                location.reload();
+            });
+}
+
 function toggle_light()
 {
     id = this.id.replace("light_", "");
@@ -77,12 +97,23 @@ function timeout_select()
             location.reload();
         });
 }
+
 function refresh()
 {
     document.location.reload(true);
 };
 
 function installPostHandlers() {
+    $(".powerplug").each(function(index) {
+        obj = $(".powerplug")[index];
+        document.querySelector('#' + obj.id).addEventListener('toggle', toggle_power);
+    });
+
+    $(".heating").each(function(index) {
+        obj = $(".heating")[index];
+        document.querySelector('#' + obj.id).addEventListener('toggle', heating_change);
+    });
+
     $(".light").each(function(index) {
         obj = $(".light")[index];
         document.querySelector('#' + obj.id).addEventListener('toggle', toggle_light);
