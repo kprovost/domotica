@@ -47,9 +47,9 @@ groups = [
             ]),
         LightGroup("Slaapkamers",
             [
-                ( "Slaapkamer 1", 38 ),
-                ( "Slaapkamer 2", 40 ),
-                ( "Slaapkamer 3", 46 ),
+                ( "Slaapkamer Nienke", 38 ),
+                ( "Bureau", 40 ),
+                ( "Slaapkamer Bram & Natalie", 46 ),
                 ( "Badkamer 2de", 62 ),
                 ( "Dakterras", 54 ),
                 ( "Dressing", 48 ),
