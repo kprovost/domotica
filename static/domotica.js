@@ -11,7 +11,7 @@ function toggle_power()
 function heating_change()
 {
     id = this.id.replace("heating_", "");
-    $.post("/heating/toggle", { id: id })
+    $.post("/heating/toggle/" + id)
         .fail(function(){
                 console.log("Failed to post /heating/toggle " + id);
                 location.reload();
