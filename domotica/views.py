@@ -152,16 +152,10 @@ def powerplug(request):
 
 @csrf_exempt
 @login_required
-def powerswitch(request, action):
+def powerswitch(request, action, ID):
     s7conn = s7.S7Comm(PLC_IP)
 
-    idInt = 0
-    try:
-        idInt = int(request.REQUEST["id"])
-    except:
-        raise Http404
-
-    plug = power.getPlug(idInt, s7conn)
+    plug = power.getPlug(int(ID), s7conn)
 
     if action == "toggle":
         print ("Power plug %s toggled by %s" % (plug.getName(),
