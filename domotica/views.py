@@ -139,6 +139,14 @@ def alarm_action(request, action):
         a.arm()
     elif action == 'disarm':
         a.disarm()
+    elif action == 'toggle_detector':
+        idInt = 0
+        try:
+            idInt = int(request.REQUEST["id"])
+        except:
+            raise Http404
+        d = alarm.getDetectorByID(s7conn, idInt)
+        d.toggle()
     context = {
             'alarm': a,
             'detectors': alarm.getDetectors(s7conn)

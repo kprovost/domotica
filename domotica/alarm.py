@@ -34,9 +34,10 @@ class Detector:
         #return self._s7conn.readBit(self.DETECTOR_DB, self.id, self.STATUS_BIT)
         return False
 
-    def setEnabled(self, enable):
-        bit = 0
-        if enable:
+    def toggle(self):
+        if self.isEnabled():
+            bit = 0
+        else:
             bit = 1
         #self._s7conn.writeBit(self.DETECTOR_DB, self.id, self.ENABLE_BIT, bit)
         return True
@@ -69,3 +70,11 @@ def getDetectors(s7conn):
         d = Detector(name, id, s7conn)
         l.append(d)
     return l
+
+def getDetectorByID(s7conn, id):
+    l = getDetectors(s7conn)
+    for d in l:
+        if d.getID() == id:
+            return d
+    return None
+
