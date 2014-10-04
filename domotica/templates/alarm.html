@@ -17,6 +17,17 @@
     <li>
         Status: {% if alarm.isArmed %}Op scherp{% else %}Uit{% endif %}
     </li>
+    <li class="list-divider">Detectoren</li>
+    {% for detector in detectors %}
+    <li>
+        {{ detector.getName }}
+
+        <div id="detector_{{ detector.getID }}" class="detector toggle {% if detector.isEnabled %}active{% endif %}">
+            <div class="toggle-handle"></div>
+        </div>
+    </li>
+    {% endfor %}
+    <li></li>
 </ul>
 
 {% include "footer.html" %}

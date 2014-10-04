@@ -123,7 +123,10 @@ def lightsettings(request, id):
 def alarm_index(request):
     s7conn = s7.S7Comm(PLC_IP)
     a = alarm.Alarm(s7conn)
-    context = { 'alarm': a }
+    context = {
+            'alarm': a,
+            'detectors': alarm.getDetectors(s7conn)
+            }
     return render(request, "alarm.html", context)
 
 @csrf_exempt
@@ -136,7 +139,10 @@ def alarm_action(request, action):
         a.arm()
     elif action == 'disarm':
         a.disarm()
-    context = { 'alarm': a }
+    context = {
+            'alarm': a,
+            'detectors': alarm.getDetectors(s7conn)
+            }
     return render(request, "alarm.html", context)
 
 @login_required
