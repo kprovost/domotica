@@ -5,6 +5,13 @@
     <li>
         <div class="alarm">ALARM</div>
     </li>
+        {% for detector in detectors %}
+            {% if detector.isTriggered %}
+                <li>
+                    <div class="alarm">{{ detector.getName }}</div>
+                </li>
+            {% endif %}
+        {% endfor %}
     {% endif %}
 
     <li>
