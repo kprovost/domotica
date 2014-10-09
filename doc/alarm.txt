@@ -1,0 +1,16 @@
+     U     M      5.2
+      =     DB12.DBX    0.3             //alarm ingeschakeld
+read only
+
+
+      O     M      1.1
+      U     T     35
+      =     DB12.DBX    0.4             //Alarm op scherp
+read only
+
+      O     M      1.1
+      U     M      5.3
+      =     DB12.DBX    0.5             //alarm gaat af
+read only
+
+

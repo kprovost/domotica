@@ -1,0 +1,3 @@
+DB10.DBW4 bevat de temperatuur in de stal als integer x 10 (Dus waarde van DB10.DBW4 delen door 10 = temperatuur in °C)
+DB10.DBW6 is het setpunt van de verwarming in de stal. Als je die waarde verhoogt, zal de verwarming aanspringen.
+

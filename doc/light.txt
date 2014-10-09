@@ -1,0 +1,33 @@
+Voor Natalie's domotica dien je te weten:
+- voor elk lichtpunt zijn er 2 datawoorden voorzien. Per lichtpunt hebben die
+hetzelfde nummer, maar ze komen uit verschillende databouwstenen.
+- DB12 (toewijzing lichtpunten in bijlage) bevat de bits die de instelling en
+bediening van elk lichtpunt controleren (zie hieronder). Er zijn 31
+lichtpunten. Die vind je in de lijst in bijlage op de adressen DBW2...DBW62
+- DB15 bevat op hetzelfde adres een integer getal dat aangeeft hoe lang een
+licht blijft branden als er in het donker een beweging wordt waargenomen.
+- De toewijzing van de bits in de datawoorden van DB12 is als volgt:
+    - DBX0.0: hulpmerker (niet gebruiken)
+    - DBX0.1: hulpmerker (niet gebruiken)
+    - DBX0.2: hulpmerker (niet gebruiken)
+    - DBX0.3: hulpmerker (niet gebruiken)
+    - DBX0.4: hulpmerker (niet gebruiken)
+    - DBX0.5: bediening licht vanaf smartphone: geef een puls net zoals bij
+drukknop (alleen schrijven)
+    - DBX0.6: terugmelding lamp brandt (alleen lezen)
+    - DBX0.7: keuze of licht in die kamer al dan niet moet reageren op
+beweging (lezen en schrijven)
+    - DBX1.0: keuze of licht in die kamer moet knipperen bij alarm (lezen en
+schrijven)
+    - DBX1.1: reserve
+    - DBX1.2: reserve
+    - DBX1.3: reserve
+    - DBX1.4: reserve
+    - DBX1.5: reserve
+    - DBX1.6: reserve
+    - DBX1.7: reserve
+- nog enkele extra functies (telkens een puls geven, dus alleen schrijven):
+    - DB12.DBX0.0: alle lichten doven
+    - DB12.DBX0.1: zet alarm op scherp
+    - DB12.DBX0.2: zet alarm af
+

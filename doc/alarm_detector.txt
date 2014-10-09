@@ -1,0 +1,32 @@
+Voor de alarminstallatie bij Natalie zou er nog een en ander moeten aangepast
+worden om:
+- te kunnen kiezen op welke detectoren het alarm kan afgaan
+- te weten op welke detector een alarm is gedetecteerd geweest
+
+Ik heb al enkele aanpassingen in het PLC programma aangebracht, maar om deze
+zaken te kunnen instellen en visualiseren, zou jij op de smartphone (ook op de
+mijne?) nog volgende aanpassingen moeten doorvoeren:
+- voor elke detector 1 bit lezen/schrijven waarmee gekozen wordt of die
+detector het alarm kan laten afgaan of niet
+- voor elke detector 1 bit lezen: die bit is hoog (zolang de alarminstallatie
+aan staat) wanneer de bijhorende detector een beweging heeft gezien de de
+alarminstallatie op scherp stond (maw wanneer op die detector het alarm is
+afgegaan). Zodra de alarminstallatie uitgeschakeld wordt, zullen deze bits
+vanzelf "0" worden.
+
+De eerste variabele is de 10de bit van elk datawoord (zie hieronder) dat voor
+een bepaalde kamer is gereserveerd
+De 2de variabele is de 11de bit van hetzelfde datawoord
+Indien ik mij niet vergis zijn er van de bewuste datawoorden al 9 bits
+gebruikt. Het zijn dus gewoon de 2 volgende bits.
+De toewijzing is als volgt:
+- detector inrit: DB12.DBW32 (dus bit 33.1 en 33.2)
+- detector keuken: DB12.DBW4 (dus bit 5.1, resp 5.2)
+- detector bijkeuken: DB12.DBW2 (dus bit 3.1, resp 3.2)
+- detector zithoek: DB12.DBW22 (dus bit 23.1/23.2)
+- detector eetplaats: DB12.DBW6 (dus bit 7.1/7.2)
+- detector inkomhal: DB12.DBW14 (dus bit 15.1/15.2)
+
+Als jij daar eens naar zou kunnen kijken, kunnen we eens in Kerksken afspreken
+om dat tesamen deze aanpassingen te laden en te testen.
+
