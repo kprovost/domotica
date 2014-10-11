@@ -12,8 +12,8 @@ detectors = [
 class Detector:
     DETECTOR_DB = 12
 
-    ENABLE_BIT = 10
-    STATUS_BIT = 11
+    ENABLE_BIT = 9
+    STATUS_BIT = 10
 
     def __init__(self, name, id, s7conn):
         self._name = name
