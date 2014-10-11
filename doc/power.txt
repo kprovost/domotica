@@ -1,0 +1,3 @@
+db12.dbx0.6 = stopcontact 1 in keuken (read/write)
+
+db12.dbx0.7 = stopcontact 2 in keuken (read/write)

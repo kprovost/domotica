@@ -5,6 +5,13 @@
     <li>
         <div class="alarm">ALARM</div>
     </li>
+        {% for detector in detectors %}
+            {% if detector.isTriggered %}
+                <li>
+                    <div class="alarm">{{ detector.getName }}</div>
+                </li>
+            {% endif %}
+        {% endfor %}
     {% endif %}
 
     <li>
@@ -17,6 +24,17 @@
     <li>
         Status: {% if alarm.isArmed %}Op scherp{% else %}Uit{% endif %}
     </li>
+    <li class="list-divider">Detectoren</li>
+    {% for detector in detectors %}
+    <li>
+        {{ detector.getName }}
+
+        <div id="detector_{{ detector.getID }}" class="detector toggle {% if detector.isEnabled %}active{% endif %}">
+            <div class="toggle-handle"></div>
+        </div>
+    </li>
+    {% endfor %}
+    <li></li>
 </ul>
 
 {% include "footer.html" %}

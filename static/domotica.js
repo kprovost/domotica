@@ -78,6 +78,17 @@ function alarm_arm()
         });
 };
 
+function toggle_alarm_detector()
+{
+    console.log("Toggle alarm detector");
+    id = this.id.replace("detector_", "");
+    $.post("/alarm_action/toggle_detector", { id: id })
+        .fail(function(){
+            console.log("Failed to post toggle_detector");
+            location.reload();
+        });
+};
+
 function timeout_select()
 {
     console.log("Update light timeout");
@@ -139,6 +150,11 @@ function installPostHandlers() {
         document.querySelector("#alarm_disarm").addEventListener('touchend', alarm_disarm);
     if (document.querySelector("#alarm_arm"))
         document.querySelector("#alarm_arm").addEventListener('touchend', alarm_arm);
+
+    $(".detector").each(function(index) {
+        obj = $(".detector")[index];
+        document.querySelector("#" + obj.id).addEventListener('toggle', toggle_alarm_detector);
+    });
 };
 
 function readCookie(name) {

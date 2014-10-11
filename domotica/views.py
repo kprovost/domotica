@@ -7,7 +7,7 @@ from django.conf import settings
 import s7
 
 import light
-from alarm import Alarm
+import alarm
 from heating import Heating
 import power
 
@@ -120,10 +120,13 @@ def lightsettings(request, id):
     return render(request, "lightsettings.html", context)
 
 @login_required
-def alarm(request):
+def alarm_index(request):
     s7conn = s7.S7Comm(PLC_IP)
-    a = Alarm(s7conn)
-    context = { 'alarm': a }
+    a = alarm.Alarm(s7conn)
+    context = {
+            'alarm': a,
+            'detectors': alarm.getDetectors(s7conn)
+            }
     return render(request, "alarm.html", context)
 
 @csrf_exempt
@@ -131,12 +134,23 @@ def alarm(request):
 def alarm_action(request, action):
     print "alarm_action"
     s7conn = s7.S7Comm(PLC_IP)
-    a = Alarm(s7conn)
+    a = alarm.Alarm(s7conn)
     if action == 'arm':
         a.arm()
     elif action == 'disarm':
         a.disarm()
-    context = { 'alarm': a }
+    elif action == 'toggle_detector':
+        idInt = 0
+        try:
+            idInt = int(request.REQUEST["id"])
+        except:
+            raise Http404
+        d = alarm.getDetectorByID(s7conn, idInt)
+        d.toggle()
+    context = {
+            'alarm': a,
+            'detectors': alarm.getDetectors(s7conn)
+            }
     return render(request, "alarm.html", context)
 
 @login_required

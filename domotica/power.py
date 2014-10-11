@@ -17,15 +17,13 @@ class PowerPlug:
         return self._name
 
     def isOn(self):
-        return not self._s7conn.readBit(self.POWER_DB, self.POWER_WORD,  self._bit)
+        return self._s7conn.readBit(self.POWER_DB, self.POWER_WORD, self._bit)
 
     def togglePower(self):
-        # Note: inverse logic (0 == on)
-        val = 0
+        val = 1
         if self.isOn():
-            val = 1
-        print "Woud write %d %d %d %d" % (self.POWER_DB, self.POWER_WORD, self._bit, val)
-        #self._s7conn.writeBit(self.POWER_DB, self.POWER_WORD, self._bit, val)
+            val = 0
+        self._s7conn.writeBit(self.POWER_DB, self.POWER_WORD, self._bit, val)
 
 def getPlugs(s7conn):
     plugs = [
