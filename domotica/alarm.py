@@ -27,19 +27,17 @@ class Detector:
         return self._id
 
     def isEnabled(self):
-        #return self._s7conn.readBit(self.DETECTOR_DB, self.id, self.ENABLE_BIT)
-        return True
+        return self._s7conn.readBit(self.DETECTOR_DB, self._id, self.ENABLE_BIT)
 
     def isTriggered(self):
-        #return self._s7conn.readBit(self.DETECTOR_DB, self.id, self.STATUS_BIT)
-        return False
+        return self._s7conn.readBit(self.DETECTOR_DB, self._id, self.STATUS_BIT)
 
     def toggle(self):
         if self.isEnabled():
             bit = 0
         else:
             bit = 1
-        #self._s7conn.writeBit(self.DETECTOR_DB, self.id, self.ENABLE_BIT, bit)
+        self._s7conn.writeBit(self.DETECTOR_DB, self._id, self.ENABLE_BIT, bit)
         return True
 
 class Alarm:
