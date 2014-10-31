@@ -11,7 +11,8 @@ import alarm
 from heating import Heating
 import power
 
-PLC_IP = "10.0.3.9"
+def getS7Conn():
+    return s7.S7Comm(settings.PLC_IP)
 
 def _lightCount(s7conn, groupName):
     lights = light.loadGroup(s7conn, groupName)
@@ -25,7 +26,7 @@ def _lightCount(s7conn, groupName):
 
 @login_required
 def index(request):
-    s7conn = s7.S7Comm(PLC_IP)
+    s7conn = getS7Conn()
 
     groups = light.loadGroupNames()
     groups = map(lambda x: (x, _lightCount(s7conn, x)), groups)
@@ -52,7 +53,7 @@ def do_login(request):
 
 @login_required
 def lightgroup(request, groupName):
-    s7conn = s7.S7Comm(PLC_IP)
+    s7conn = getS7Conn()
     lights = light.loadGroup(s7conn, groupName)
     if lights is None:
         raise Http404
@@ -66,7 +67,7 @@ def lightgroup(request, groupName):
 @csrf_exempt
 @login_required
 def lightswitch(request, action):
-    s7conn = s7.S7Comm(PLC_IP)
+    s7conn = getS7Conn()
     if action == "all_off":
         if not light.AllOff(s7conn):
             raise Http404
@@ -110,7 +111,7 @@ def lightsettings(request, id):
     except:
         raise Http404
 
-    s7conn = s7.S7Comm(PLC_IP)
+    s7conn = getS7Conn()
 
     l = light.loadByID(s7conn, idInt)
     if l is None:
@@ -121,7 +122,7 @@ def lightsettings(request, id):
 
 @login_required
 def alarm_index(request):
-    s7conn = s7.S7Comm(PLC_IP)
+    s7conn = getS7Conn()
     a = alarm.Alarm(s7conn)
     context = {
             'alarm': a,
@@ -133,7 +134,7 @@ def alarm_index(request):
 @login_required
 def alarm_action(request, action):
     print "alarm_action"
-    s7conn = s7.S7Comm(PLC_IP)
+    s7conn = getS7Conn()
     a = alarm.Alarm(s7conn)
     if action == 'arm':
         a.arm()
@@ -155,7 +156,7 @@ def alarm_action(request, action):
 
 @login_required
 def powerplug(request):
-    s7conn = s7.S7Comm(PLC_IP)
+    s7conn = getS7Conn()
 
     plugs = power.getPlugs(s7conn)
     if power is None:
@@ -167,7 +168,7 @@ def powerplug(request):
 @csrf_exempt
 @login_required
 def powerswitch(request, action, ID):
-    s7conn = s7.S7Comm(PLC_IP)
+    s7conn = getS7Conn()
 
     plug = power.getPlug(int(ID), s7conn)
 
@@ -183,7 +184,7 @@ def powerswitch(request, action, ID):
 
 @login_required
 def heating(request):
-    s7conn = s7.S7Comm(PLC_IP)
+    s7conn = getS7Conn()
     h = Heating(s7conn)
 
     context = { 'heating': h }
@@ -192,7 +193,7 @@ def heating(request):
 @csrf_exempt
 @login_required
 def heatingtoggle(request, ID):
-    s7conn = s7.S7Comm(PLC_IP)
+    s7conn = getS7Conn()
     h = Heating(s7conn)
 
     if ID == "force_on":
