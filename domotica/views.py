@@ -133,7 +133,6 @@ def alarm_index(request):
 @csrf_exempt
 @login_required
 def alarm_action(request, action):
-    print "alarm_action"
     s7conn = getS7Conn()
     a = alarm.Alarm(s7conn)
     if action == 'arm':
