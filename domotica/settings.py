@@ -115,7 +115,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "/home/kp/domotica/domotica/templates"
+    "/home/kp/domotica/domotica/templates",
 )
 
 INSTALLED_APPS = (
@@ -159,3 +159,6 @@ LOGGING = {
         },
     }
 }
+
+# The IP address of the PLC
+PLC_IP = "10.0.3.9"
