@@ -1,5 +1,6 @@
 import domotica.alarm
 import domotica.alarm as alarm
+import logging
 from poller import Poller
 import s7
 
@@ -16,8 +17,10 @@ class AlarmPoller(Poller):
             self._wasArmed = isArmed
 
         if self._wasArmed != isArmed:
-            # Log state change
-            pass
+            if isArmed:
+                logging.info("Alarm activated")
+            else:
+                logging.info("Alarm deactivated")
 
         if not isArmed:
             return
@@ -27,6 +30,6 @@ class AlarmPoller(Poller):
             self._wasTriggered = isTriggered
 
         if isTriggered and self._wasTriggered != isTriggered:
-            print "Alarm went off!"
+            logging.warn("Alarm triggered")
             # Notify
             pass

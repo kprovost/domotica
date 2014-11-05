@@ -9,6 +9,7 @@
 import daemon
 import optparse
 import time
+import logging
 
 import s7
 import domotica.settings as settings
@@ -30,6 +31,8 @@ def main():
     if not options.foreground:
         d = daemon.DaemonContext(prevent_core=False)
         d.open()
+
+    logging.basicConfig(level=logging.INFO)
 
     pollers = [
             AlarmPoller()
