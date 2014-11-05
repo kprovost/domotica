@@ -5,16 +5,28 @@ import s7
 
 class AlarmPoller(Poller):
     def __init__(self):
-        self._detection = False
+        self._wasArmed = None
+        self._wasTriggered = None
 
     def poll(self, s7conn):
         a = alarm.Alarm(s7conn)
 
-        if a.isArmed():
-            print "Alarm armed!"
-        else:
-            print "Alarm not armed"
+        isArmed = a.isArmed()
+        if self._wasArmed is None:
+            self._wasArmed = isArmed
+
+        if self._wasArmed != isArmed:
+            # Log state change
+            pass
+
+        if not isArmed:
             return
 
-        if a.isAlarmTriggered():
-            print "Alarm triggered too!"
+        isTriggered = a.isAlarmTriggered()
+        if self._wasTriggered is None:
+            self._wasTriggered = isTriggered
+
+        if isTriggered and self._wasTriggered != isTriggered:
+            print "Alarm went off!"
+            # Notify
+            pass
