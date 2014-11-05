@@ -29,13 +29,18 @@ def main():
     parser = optparse.OptionParser()
     parser.add_option("-f", "--foreground", action="store_true",
             dest="foreground", help="Do not daemonize", default=False)
+    parser.add_option("-d", "--debug", action="store_true",
+            dest="debug", help="Debug logging", default=False)
     (options, args) = parser.parse_args()
 
     if not options.foreground:
         d = daemon.DaemonContext(prevent_core=False)
         d.open()
 
-    logging.basicConfig(level=logging.INFO)
+    if options.debug:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
 
     pollers = [
             AlarmPoller()

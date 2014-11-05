@@ -15,6 +15,7 @@ class AlarmPoller(Poller):
         isArmed = a.isArmed()
         if self._wasArmed is None:
             self._wasArmed = isArmed
+        logging.debug("Alarm armed status: %s" % isArmed)
 
         if self._wasArmed != isArmed:
             if isArmed:
@@ -28,6 +29,7 @@ class AlarmPoller(Poller):
         isTriggered = a.isAlarmTriggered()
         if self._wasTriggered is None:
             self._wasTriggered = isTriggered
+        logging.debug("Alarm trigger status: %s" % isTriggered)
 
         if isTriggered and self._wasTriggered != isTriggered:
             logging.warn("Alarm triggered")
