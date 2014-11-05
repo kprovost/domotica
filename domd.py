@@ -10,10 +10,10 @@ import daemon
 import optparse
 import time
 
-import domotica.alarm
-import domotica.settings as settings
-import domotica.alarm as alarm
 import s7
+import domotica.settings as settings
+
+from pollers import AlarmPoller
 
 POLL_INTERVAL = 5
 
@@ -25,8 +25,9 @@ def test(s7conn):
     if a.isAlarmTriggered():
         print("Alarm triggered too!")
 
-def poll(s7conn):
-    test(s7conn)
+def poll(s7conn, pollers):
+    for poller in pollers:
+        poller.poll(s7conn)
 
 def main():
     parser = optparse.OptionParser()
@@ -38,9 +39,12 @@ def main():
         d = daemon.DaemonContext(prevent_core=False)
         d.open()
 
+    pollers = [
+            AlarmPoller()
+        ]
     s7conn = s7.S7Comm(settings.PLC_IP)
     while True:
-        poll(s7conn)
+        poll(s7conn, pollers)
         time.sleep(POLL_INTERVAL)
 
 if __name__ == "__main__":
