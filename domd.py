@@ -22,6 +22,9 @@ def poll(s7conn, pollers):
     for poller in pollers:
         poller.poll(s7conn)
 
+def connect():
+    return s7.S7Comm(settings.PLC_IP)
+
 def main():
     parser = optparse.OptionParser()
     parser.add_option("-f", "--foreground", action="store_true",
@@ -37,9 +40,20 @@ def main():
     pollers = [
             AlarmPoller()
         ]
-    s7conn = s7.S7Comm(settings.PLC_IP)
+
+    s7conn = connect()
+
     while True:
-        poll(s7conn, pollers)
+        try:
+            poll(s7conn, pollers)
+        except s7.S7Exception, e:
+            if e.errno() == s7.S7Exception.ERR_CONNECTION_CLOSED:
+                logging.warn("Connection lost. Reconnecting...")
+                s7conn = connect()
+            else:
+                logging.error("Unknown error: %s", e)
+                raise
+
         time.sleep(POLL_INTERVAL)
 
 if __name__ == "__main__":
