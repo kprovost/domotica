@@ -17,14 +17,6 @@ from pollers import AlarmPoller
 
 POLL_INTERVAL = 5
 
-def test(s7conn):
-    a = alarm.Alarm(s7conn)
-
-    if a.isArmed():
-        print("Alarm armed!")
-    if a.isAlarmTriggered():
-        print("Alarm triggered too!")
-
 def poll(s7conn, pollers):
     for poller in pollers:
         poller.poll(s7conn)

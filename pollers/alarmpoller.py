@@ -8,4 +8,13 @@ class AlarmPoller(Poller):
         self._detection = False
 
     def poll(self, s7conn):
-        print "Poll alarm"
+        a = alarm.Alarm(s7conn)
+
+        if a.isArmed():
+            print "Alarm armed!"
+        else:
+            print "Alarm not armed"
+            return
+
+        if a.isAlarmTriggered():
+            print "Alarm triggered too!"
