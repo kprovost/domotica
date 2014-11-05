@@ -25,6 +25,14 @@ def poll(s7conn, pollers):
 def connect():
     return s7.S7Comm(settings.PLC_IP)
 
+def setup_logger(options):
+    lvl = logging.INFO
+    if options.debug:
+        lvl = logging.DEBUG
+
+    fmt = "%(asctime)s:%(levelname)s:%(module)s:%(message)s"
+    logging.basicConfig(level=lvl, format=fmt)
+
 def main():
     parser = optparse.OptionParser()
     parser.add_option("-f", "--foreground", action="store_true",
@@ -37,10 +45,7 @@ def main():
         d = daemon.DaemonContext(prevent_core=False)
         d.open()
 
-    if options.debug:
-        logging.basicConfig(level=logging.DEBUG)
-    else:
-        logging.basicConfig(level=logging.INFO)
+    setup_logger(options)
 
     pollers = [
             AlarmPoller()
