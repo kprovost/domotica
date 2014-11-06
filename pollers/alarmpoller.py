@@ -1,6 +1,8 @@
 import domotica.alarm as alarm
 import logging
 from poller import Poller
+from notifier import sms
+from domotica import settings
 import s7
 
 class AlarmPoller(Poller):
@@ -24,6 +26,9 @@ class AlarmPoller(Poller):
 
         msg = "Alarm! Detectie in %s." % (", ".join(alarmed))
         logging.warn(msg)
+        for dest in settings.SMS_DESTINATIONS:
+            if not sms.send(msg, dest):
+                logging.error("Failed to send SMS \"%s\" to %s" % (msg, dest))
 
     def poll(self, s7conn):
         a = alarm.Alarm(s7conn)
