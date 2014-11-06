@@ -13,25 +13,24 @@ class AlarmPoller(Poller):
         a = alarm.Alarm(s7conn)
 
         isArmed = a.isArmed()
-        if self._wasArmed is None:
-            self._wasArmed = isArmed
         logging.debug("Alarm armed status: %s" % isArmed)
 
-        if self._wasArmed != isArmed:
+        if self._wasArmed is not None and self._wasArmed != isArmed:
             if isArmed:
                 logging.info("Alarm activated")
             else:
                 logging.info("Alarm deactivated")
+        self._wasArmed = isArmed
 
         if not isArmed:
+            self._wasTriggered = False
             return
 
         isTriggered = a.isAlarmTriggered()
-        if self._wasTriggered is None:
-            self._wasTriggered = isTriggered
         logging.debug("Alarm trigger status: %s" % isTriggered)
 
-        if isTriggered and self._wasTriggered != isTriggered:
+        if self._wasTriggered is not None and isTriggered \
+                and self._wasTriggered != isTriggered:
             logging.warn("Alarm triggered")
             # Notify
-            pass
+        self._wasTriggered = isTriggered
