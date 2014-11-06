@@ -1,4 +1,3 @@
-import domotica.alarm
 import domotica.alarm as alarm
 import logging
 from poller import Poller
