@@ -8,6 +8,23 @@ class AlarmPoller(Poller):
         self._wasArmed = None
         self._wasTriggered = None
 
+    def onStateChange(self, s7conn, isArmed):
+        if isArmed:
+            logging.info("Alarm activated")
+        else:
+            logging.info("Alarm deactivated")
+
+    def onTriggered(self, s7conn):
+        alarmed = [ ]
+        for detector in alarm.getDetectors(s7conn):
+            if detector.isTriggered():
+                alarmed.append(detector.getName())
+        if not alarmed:
+            logging.error("Alarm is triggered, but no detector is active!")
+
+        msg = "Alarm! Detectie in %s." % (", ".join(alarmed))
+        logging.warn(msg)
+
     def poll(self, s7conn):
         a = alarm.Alarm(s7conn)
 
@@ -15,10 +32,7 @@ class AlarmPoller(Poller):
         logging.debug("Alarm armed status: %s" % isArmed)
 
         if self._wasArmed is not None and self._wasArmed != isArmed:
-            if isArmed:
-                logging.info("Alarm activated")
-            else:
-                logging.info("Alarm deactivated")
+            self.onStateChange(s7conn, isArmed)
         self._wasArmed = isArmed
 
         if not isArmed:
@@ -30,6 +44,5 @@ class AlarmPoller(Poller):
 
         if self._wasTriggered is not None and isTriggered \
                 and self._wasTriggered != isTriggered:
-            logging.warn("Alarm triggered")
-            # Notify
+            self.onTriggered(s7conn)
         self._wasTriggered = isTriggered
