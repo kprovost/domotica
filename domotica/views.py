@@ -36,7 +36,10 @@ def lightgroups(request):
     groups = light.loadGroupNames()
     groups = map(lambda x: (x, _lightCount(s7conn, x)), groups)
 
-    context = { 'groups' : groups }
+    context = {
+            'tag': 'light',
+            'groups' : groups
+            }
     return render(request, "lightgroups.html", context)
 
 def do_login(request):
@@ -64,6 +67,7 @@ def lightgroup(request, groupName):
         raise Http404
 
     context = {
+            'tag': 'light',
             'groupName': groupName,
             'lights' : lights
             }
@@ -122,7 +126,10 @@ def lightsettings(request, id):
     if l is None:
         raise Http404
 
-    context = { 'light': l }
+    context = {
+            'tag': 'light',
+            'light': l
+            }
     return render(request, "lightsettings.html", context)
 
 @login_required
@@ -130,6 +137,7 @@ def alarm_index(request):
     s7conn = getS7Conn()
     a = alarm.Alarm(s7conn)
     context = {
+            'tag': 'alarm',
             'alarm': a,
             'detectors': alarm.getDetectors(s7conn),
             'balance': float(sms.query_balance())
@@ -154,6 +162,7 @@ def alarm_action(request, action):
         d = alarm.getDetectorByID(s7conn, idInt)
         d.toggle()
     context = {
+            'tag': 'lights',
             'alarm': a,
             'detectors': alarm.getDetectors(s7conn)
             }
@@ -167,7 +176,10 @@ def powerplug(request):
     if power is None:
         raise Http404
 
-    context = { 'powerplugs': plugs }
+    context = {
+            'tag': 'power',
+            'powerplugs': plugs
+            }
     return render(request, "power.html", context)
 
 @csrf_exempt
@@ -192,7 +204,10 @@ def heating(request):
     s7conn = getS7Conn()
     h = Heating(s7conn)
 
-    context = { 'heating': h }
+    context = {
+            'tag': 'heating',
+            'heating': h
+            }
     return render(request, "heating.html", context)
 
 @csrf_exempt
