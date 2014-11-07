@@ -27,7 +27,7 @@ def _lightCount(s7conn, groupName):
 
 @login_required
 def front(request):
-    return lightgroups(request)
+    return alarm_index(request)
 
 @login_required
 def lightgroups(request):
