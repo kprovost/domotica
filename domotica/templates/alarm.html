@@ -24,6 +24,9 @@
     <li>
         Status: {% if alarm.isArmed %}Op scherp{% else %}Uit{% endif %}
     </li>
+    <li>
+        SMS krediet: {{ balance }} Euro
+    </li>
     <li class="list-divider">Detectoren</li>
     {% for detector in detectors %}
     <li>

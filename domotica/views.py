@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.conf import settings
+from notifier import sms
 import s7
 
 import light
@@ -126,7 +127,8 @@ def alarm_index(request):
     a = alarm.Alarm(s7conn)
     context = {
             'alarm': a,
-            'detectors': alarm.getDetectors(s7conn)
+            'detectors': alarm.getDetectors(s7conn),
+            'balance': sms.query_balance()
             }
     return render(request, "alarm.html", context)
 
