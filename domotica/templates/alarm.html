@@ -22,10 +22,10 @@
     </li>
     <li class="list-divider">Status</li>
     <li>
-        Status: {% if alarm.isArmed %}Op scherp{% else %}Uit{% endif %}
+        Status: <span class="right">{% if alarm.isArmed %}Op scherp{% else %}Uit{% endif %}</span>
     </li>
     <li>
-        SMS krediet: {{ balance }} Euro
+        SMS krediet: <span class="{% if balance < 2 %}low-balance{% endif %} right">{{ balance }} Euro</span>
     </li>
     <li class="list-divider">Detectoren</li>
     {% for detector in detectors %}

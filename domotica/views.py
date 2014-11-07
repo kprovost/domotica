@@ -128,7 +128,7 @@ def alarm_index(request):
     context = {
             'alarm': a,
             'detectors': alarm.getDetectors(s7conn),
-            'balance': sms.query_balance()
+            'balance': float(sms.query_balance())
             }
     return render(request, "alarm.html", context)
 
