@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.conf import settings
+from notifier import sms
 import s7
 
 import light
@@ -25,13 +26,20 @@ def _lightCount(s7conn, groupName):
     return onCount
 
 @login_required
-def index(request):
+def front(request):
+    return alarm_index(request)
+
+@login_required
+def lightgroups(request):
     s7conn = getS7Conn()
 
     groups = light.loadGroupNames()
     groups = map(lambda x: (x, _lightCount(s7conn, x)), groups)
 
-    context = { 'groups' : groups }
+    context = {
+            'tag': 'light',
+            'groups' : groups
+            }
     return render(request, "lightgroups.html", context)
 
 def do_login(request):
@@ -47,7 +55,7 @@ def do_login(request):
 
         login(request, user)
         # Redirect to a success page.
-        return index(request)
+        return front(request)
     except Exception as e:
         return render(request, "login.html")
 
@@ -59,6 +67,7 @@ def lightgroup(request, groupName):
         raise Http404
 
     context = {
+            'tag': 'light',
             'groupName': groupName,
             'lights' : lights
             }
@@ -117,7 +126,10 @@ def lightsettings(request, id):
     if l is None:
         raise Http404
 
-    context = { 'light': l }
+    context = {
+            'tag': 'light',
+            'light': l
+            }
     return render(request, "lightsettings.html", context)
 
 @login_required
@@ -125,8 +137,10 @@ def alarm_index(request):
     s7conn = getS7Conn()
     a = alarm.Alarm(s7conn)
     context = {
+            'tag': 'alarm',
             'alarm': a,
-            'detectors': alarm.getDetectors(s7conn)
+            'detectors': alarm.getDetectors(s7conn),
+            'balance': float(sms.query_balance())
             }
     return render(request, "alarm.html", context)
 
@@ -148,6 +162,7 @@ def alarm_action(request, action):
         d = alarm.getDetectorByID(s7conn, idInt)
         d.toggle()
     context = {
+            'tag': 'lights',
             'alarm': a,
             'detectors': alarm.getDetectors(s7conn)
             }
@@ -161,7 +176,10 @@ def powerplug(request):
     if power is None:
         raise Http404
 
-    context = { 'powerplugs': plugs }
+    context = {
+            'tag': 'power',
+            'powerplugs': plugs
+            }
     return render(request, "power.html", context)
 
 @csrf_exempt
@@ -186,7 +204,10 @@ def heating(request):
     s7conn = getS7Conn()
     h = Heating(s7conn)
 
-    context = { 'heating': h }
+    context = {
+            'tag': 'heating',
+            'heating': h
+            }
     return render(request, "heating.html", context)
 
 @csrf_exempt

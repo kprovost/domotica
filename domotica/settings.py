@@ -162,3 +162,9 @@ LOGGING = {
 
 # The IP address of the PLC
 PLC_IP = "10.0.3.9"
+
+# SMS information
+API_KEY = "XXXXXXXX"
+API_SECRET = "XXXXXXXX"
+
+SMS_DESTINATIONS = [ "32123456789" ]
