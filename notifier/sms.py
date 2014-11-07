@@ -4,7 +4,9 @@ import logging
 from domotica import settings
 
 HOST = "rest.nexmo.com"
-PATH = "/sms/json"
+SEND_PATH = "/sms/json"
+BALANCE_PATH = "/account/get-balance/%s/%s" % (settings.API_KEY, settings.API_SECRET)
+
 URL = "https://rest.nexmo.com/sms/json"
 
 def build_request(text, to):
@@ -17,13 +19,13 @@ def build_request(text, to):
 
     return smsreq
 
-def send_request(smsreq):
+def send_request(smsreq, method, path):
     params = urllib.urlencode(smsreq)
     headers = {
             "Content-type": "application/x-www-form-urlencoded"
         }
     conn = httplib.HTTPConnection(HOST)
-    conn.request("POST", PATH, params, headers)
+    conn.request(method, path, params, headers)
     response = conn.getresponse()
     data = response.read()
     conn.close()
@@ -40,9 +42,14 @@ def parse_response(r):
         remaining_balance = parse_message(m)
     return remaining_balance
 
+def query_balance():
+    resp = send_request({ }, "GET", BALANCE_PATH)
+    d = json.loads(resp)
+    return d['value']
+
 def send(text, to):
     smsreq = build_request(text, to)
-    response = send_request(smsreq)
+    response = send_request(smsreq, "POST", SEND_PATH)
 
     try:
         data = json.loads(response)
