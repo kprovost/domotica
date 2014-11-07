@@ -26,7 +26,11 @@ def _lightCount(s7conn, groupName):
     return onCount
 
 @login_required
-def index(request):
+def front(request):
+    return lightgroups(request)
+
+@login_required
+def lightgroups(request):
     s7conn = getS7Conn()
 
     groups = light.loadGroupNames()
@@ -48,7 +52,7 @@ def do_login(request):
 
         login(request, user)
         # Redirect to a success page.
-        return index(request)
+        return front(request)
     except Exception as e:
         return render(request, "login.html")
 

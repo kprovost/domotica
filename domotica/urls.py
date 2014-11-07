@@ -7,7 +7,7 @@ import views
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'domotica.views.index', name='index'),
+    url(r'^$', 'domotica.views.lightgroups', name='lightgroups'),
     url(r'^login$', 'domotica.views.do_login', name='login'),
     url(r'^lightgroup/(?P<groupName>.*)', 'domotica.views.lightgroup', name='lightgroup'),
     url(r'^lightswitch/(?P<action>.*)', 'domotica.views.lightswitch', name='lightswitch'),
