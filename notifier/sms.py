@@ -24,7 +24,7 @@ def send_request(smsreq, method, path):
     headers = {
             "Content-type": "application/x-www-form-urlencoded"
         }
-    conn = httplib.HTTPConnection(HOST)
+    conn = httplib.HTTPSConnection(HOST)
     conn.request(method, path, params, headers)
     response = conn.getresponse()
     data = response.read()
