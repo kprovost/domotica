@@ -47,6 +47,8 @@ def main():
 
     setup_logger(options)
 
+    logging.info("Starting domd...")
+
     pollers = [
             AlarmPoller()
         ]
