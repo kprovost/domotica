@@ -1,21 +1,23 @@
 import rrdtool
 import logging
 import os
+import tempfile
 import domotica.heating as heating
 from poller import Poller
 import s7
 
+RRD_FILE = "stable_temperature.rrd"
+
+
 class TemperaturePoller(Poller):
-    RRD_FILE = "stable_temperature.rrd"
-    PNG_FILE = "/tmp/stable_temperature.png"
 
     def __init__(self): # TODO Add poll interval parameter
-        if not os.path.exists(self.RRD_FILE):
+        if not os.path.exists(RRD_FILE):
             self.create()
 
     def create(self):
         try:
-            rrdtool.create(self.RRD_FILE,
+            rrdtool.create(RRD_FILE,
                     '--no-overwrite',
                     '--step', '5',
                     'DS:temperature:GAUGE:30:-20:100',
@@ -29,13 +31,18 @@ class TemperaturePoller(Poller):
         h = heating.Heating(s7conn)
         temp = h.getCurrent()
         try:
-            rrdtool.update(self.RRD_FILE, "N:%.1f" % temp)
+            rrdtool.update(RRD_FILE, "N:%.1f" % temp)
         except Exception, e:
             logging.error("Failed to log temperature: %s" % e)
 
+    def read_file(self, name):
+        with open(name) as f:
+            return f.read()
+
     def draw(self, start):
         try:
-            rrdtool.graph(self.PNG_FILE,
+            t = tempfile.NamedTemporaryFile()
+            rrdtool.graph(t.name,
                     '--imgformat', 'PNG',
                     '--width', '540',
                     '--height', '100',
@@ -44,8 +51,9 @@ class TemperaturePoller(Poller):
                     '--vertical-label', 'Graden Celcius',
                     '--title', 'Temperature',
                     #'--lower-limit', '0',
-                    "DEF:temperature=%s:temperature:AVERAGE" % self.RRD_FILE,
+                    "DEF:temperature=%s:temperature:AVERAGE" % RRD_FILE,
                     'AREA:temperature#990033:Temperatuur')
+            return self.read_file(t.name)
         except Exception, e:
             logging.error("Failed to draw temperature: %s" % e)
             raise
