@@ -30,6 +30,7 @@ class TemperaturePoller(Poller):
     def poll(self, s7conn):
         h = heating.Heating(s7conn)
         temp = h.getCurrent()
+        logging.debug("Stable temperature: %0.1f" % temp)
         try:
             rrdtool.update(RRD_FILE, "N:%.1f" % temp)
         except Exception, e:
