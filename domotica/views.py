@@ -208,6 +208,13 @@ def powerswitch(request, action, ID):
     return HttpResponse()
 
 @login_required
+def heatinghistory(request):
+    context = {
+            'tag': 'heating',
+            }
+    return render(request, "heatinghistory.html", context)
+
+@login_required
 def heating(request):
     s7conn = getS7Conn()
     h = Heating(s7conn)

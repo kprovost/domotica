@@ -3,8 +3,10 @@
 <ul class="list">
     <li class="list-divider">Temperatuur</li>
     <li>
-        <span class="label">Actuele temperatuur</span>
-        <span class="value">{{ heating.getCurrent|stringformat:".1f" }}C</span>
+        <a href="{% url 'heatinghistory' %}" data-transition="slide-in">
+            <span class="label">Actuele temperatuur</span>
+            <span class="value">{{ heating.getCurrent|stringformat:".1f" }}C</span>
+        </a>
     </li>
     <li>
         <span class="label">Setpunt temperatuur</span>
