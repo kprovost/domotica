@@ -14,7 +14,7 @@ import logging
 import s7
 import domotica.settings as settings
 
-from pollers import AlarmPoller
+from pollers import AlarmPoller, TemperaturePoller
 
 POLL_INTERVAL = 5
 
@@ -50,7 +50,8 @@ def main():
     logging.info("Starting domd...")
 
     pollers = [
-            AlarmPoller()
+            AlarmPoller(),
+            TemperaturePoller()
         ]
 
     s7conn = connect()
