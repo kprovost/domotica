@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.conf import settings
+import logging
 from notifier import sms
 import s7
 
@@ -136,11 +137,18 @@ def lightsettings(request, id):
 def alarm_index(request):
     s7conn = getS7Conn()
     a = alarm.Alarm(s7conn)
+
+    balance = "N/A"
+    try:
+        balance = float(sms.query_balance())
+    except Exception, e:
+        logging.error("Failed to retrieve SMS account balance: %s" % e)
+
     context = {
             'tag': 'alarm',
             'alarm': a,
             'detectors': alarm.getDetectors(s7conn),
-            'balance': float(sms.query_balance())
+            'balance': balance
             }
     return render(request, "alarm.html", context)
 
