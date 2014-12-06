@@ -11,3 +11,4 @@ Requirements
 ============
  * Django
  * python-daemon
+ * python-rrdtool
