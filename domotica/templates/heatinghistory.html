@@ -1,3 +1,18 @@
 {% include "header.html" with title="Geschiedenis" %}
 
+<ul class="list">
+<li>
+    Vandaag
+    <img src="{% url 'heating_graph' 'daily' %}" width="120%">
+</li>
+<li>
+    Deze week
+    <img src="{% url 'heating_graph' 'weekly' %}" width="120%">
+</li>
+<li>
+    Dit jaar
+    <img src="{% url 'heating_graph' 'yearly' %}" width="120%">
+</li>
+</ul>
+
 {% include "footer.html" %}

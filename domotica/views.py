@@ -6,6 +6,7 @@ from django.http import HttpResponse, Http404
 from django.conf import settings
 import logging
 from notifier import sms
+from pollers import TemperaturePoller
 import s7
 
 import light
@@ -206,6 +207,22 @@ def powerswitch(request, action, ID):
         raise Http404
 
     return HttpResponse()
+
+@login_required
+def heatinggraph(request, period):
+    if period == "daily":
+        time = "1 day"
+    elif period == "weekly":
+        time = "1 week"
+    else:
+        time = "1 year"
+
+    t = TemperaturePoller()
+    img = t.draw(time)
+    response = HttpResponse()
+    response['content_type'] = "image/png"
+    img.save(response,'png')
+    return response
 
 @login_required
 def heatinghistory(request):

@@ -2,6 +2,7 @@ import rrdtool
 import logging
 import os
 import tempfile
+import Image
 import domotica.heating as heating
 from poller import Poller
 import s7
@@ -37,8 +38,7 @@ class TemperaturePoller(Poller):
             logging.error("Failed to log temperature: %s" % e)
 
     def read_file(self, name):
-        with open(name) as f:
-            return f.read()
+        return Image.open(name)
 
     def draw(self, start):
         try:
