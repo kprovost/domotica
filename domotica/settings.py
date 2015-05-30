@@ -13,7 +13,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'domotica.sqlite3',                      # Or path to database file if using sqlite3.
+        'NAME': '/home/kp/domotica/domotica.sqlite3',                      # Or path to database file if using sqlite3.
     }
 }
 
@@ -87,7 +87,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '6arte)%!37ec8670%oauw5wcj)h9=mu@$81ogf$ms(mg=n1)*z'
+SECRET_KEY = '0e874493a2b70c76ffcde0da3f80a9fff493c6f2607f51373c4fd9c60fd896d5'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -115,7 +115,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.getcwd() + "/domotica/templates",
+    "/home/kp/domotica/domotica/templates",
 )
 
 INSTALLED_APPS = (
