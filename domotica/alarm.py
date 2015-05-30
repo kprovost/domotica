@@ -59,8 +59,13 @@ class Alarm:
     def isArmed(self):
         return self._s7conn.readFlagBit(5, 2)
 
-    def isAlarmTriggered(self):
+    def isWarning(self):
+        # Alarm is two state when triggered, the first 'warning' flashes the lights
+        # The second stage will trigger the siren and SMS warning.
         return self._s7conn.readFlagBit(5, 3)
+
+    def isAlarmTriggered(self):
+        return self._s7conn.readBit(self.ALARM_DB, 0, 5)
 
 def getDetectors(s7conn):
     l = [ ]
