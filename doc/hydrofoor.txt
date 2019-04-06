@@ -1,0 +1,2 @@
+als bit db10.dbx52.0 hoog wordt, dan sms alarm sturen "storing hydrofoor
+sanitair water". Om het alarm te resetten: bit db10.dbx52.1 even hoog maken.
