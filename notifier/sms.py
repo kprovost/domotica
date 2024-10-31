@@ -1,5 +1,6 @@
 import json
-import httplib, urllib
+import urllib
+import http.client as httplib
 import logging
 from domotica import settings
 
@@ -57,7 +58,7 @@ def send(text, to):
 
         if float(remaining_balance) < 2:
             logging.warning("Remaining balance is only %s!" % remaining_balance)
-    except Exception, e:
+    except Exception as e:
         logging.error("Failed to parse response (%s): %s" % (response, e))
         return False
 

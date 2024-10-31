@@ -6,13 +6,13 @@ from django.http import HttpResponse, Http404
 from django.conf import settings
 import logging
 from notifier import sms
-from pollers import TemperaturePoller
+from pollers.temperaturepoller import TemperaturePoller
 import s7
 
-import light
-import alarm
-from heating import Heating
-import power
+import domotica.light
+import domotica.alarm
+from domotica.heating import Heating
+import domotica.power
 
 def getS7Conn():
     return s7.S7Comm(settings.PLC_IP)
@@ -142,7 +142,7 @@ def alarm_index(request):
     balance = "N/A"
     try:
         balance = float(sms.query_balance())
-    except Exception, e:
+    except Exception as e:
         logging.error("Failed to retrieve SMS account balance: %s" % e)
 
     context = {

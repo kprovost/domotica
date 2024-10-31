@@ -59,7 +59,7 @@ def main():
     while True:
         try:
             poll(s7conn, pollers)
-        except s7.S7Exception, e:
+        except s7.S7Exception as e:
             if e.errno() == s7.S7Exception.ERR_CONNECTION_CLOSED:
                 logging.warn("Connection lost. Reconnecting...")
                 s7conn = connect()

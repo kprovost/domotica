@@ -28,12 +28,12 @@ class Heating:
         val = 0
         if not self.isForcedOn():
             val = 1
-        print "toggleForceOn"
+        print("toggleForceOn")
         #self._s7conn.writeFlagBit(2, 3, val)
 
     def toggleAuto(self):
         val = 0
         if not self.isModeAuto():
             val = 1
-        print "toggleAuto"
+        print("toggleAuto")
         #self._s7conn.writeFlagBit(2, 4, val)

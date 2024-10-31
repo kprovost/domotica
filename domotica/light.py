@@ -1,4 +1,4 @@
-import lightconf
+import domotica.lightconf
 import s7
 
 class Light:
