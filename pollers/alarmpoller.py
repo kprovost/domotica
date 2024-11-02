@@ -1,6 +1,6 @@
 import domotica.alarm as alarm
 import logging
-from poller import Poller
+from pollers.poller import Poller
 from notifier import sms
 from domotica import settings
 import s7

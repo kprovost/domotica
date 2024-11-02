@@ -14,7 +14,8 @@ import logging
 import s7
 import domotica.settings as settings
 
-from pollers import AlarmPoller, TemperaturePoller
+from pollers.alarmpoller import AlarmPoller
+from pollers.temperaturepoller import TemperaturePoller
 
 POLL_INTERVAL = 5
 
