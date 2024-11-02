@@ -15,7 +15,7 @@ from domotica.heating import Heating
 import domotica.power
 
 def getS7Conn():
-    return s7.S7Comm(settings.PLC_IP)
+    return s7.S7Comm(settings.PLC_IP, 1)
 
 def _lightCount(s7conn, groupName):
     lights = light.loadGroup(s7conn, groupName)
