@@ -1,6 +1,5 @@
 import json
-import urllib
-import http.client as httplib
+import httplib2, urllib
 import logging
 from domotica import settings
 
@@ -21,16 +20,12 @@ def build_request(text, to):
     return smsreq
 
 def send_request(smsreq, method, path):
-    params = urllib.urlencode(smsreq)
+    params = urllib.parse.urlencode(smsreq)
     headers = {
             "Content-type": "application/x-www-form-urlencoded"
         }
-    conn = httplib.HTTPSConnection(HOST)
-    conn.request(method, path, params, headers)
-    response = conn.getresponse()
-    data = response.read()
-    conn.close()
-
+    conn = httplib2.Http()
+    response, data = conn.request("https://" + HOST + path + "?" + params, method, headers=headers)
     return data
 
 def parse_message(m):
