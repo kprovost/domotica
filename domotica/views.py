@@ -9,13 +9,13 @@ from notifier import sms
 from pollers.temperaturepoller import TemperaturePoller
 import s7
 
-import domotica.light
-import domotica.alarm
+import domotica.light as light
+import domotica.alarm as alarm
 from domotica.heating import Heating
-import domotica.power
+import domotica.power as power
 
 def getS7Conn():
-    return s7.S7Comm(settings.PLC_IP, 1)
+    return s7.S7Comm(settings.PLC_IP, settings.PLC_TYPE)
 
 def _lightCount(s7conn, groupName):
     lights = light.loadGroup(s7conn, groupName)

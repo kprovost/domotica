@@ -27,17 +27,19 @@
     <li>
         SMS krediet: <span class="{% if balance < 2 %}low-balance{% endif %} value">{{ balance }} Euro</span>
     </li>
-    <li class="list-divider">Detectoren</li>
-    {% for detector in detectors %}
-    <li>
-        {{ detector.getName }}
+    {% if detectors|length > 0 %}
+        <li class="list-divider">Detectoren</li>
+        {% for detector in detectors %}
+        <li>
+            {{ detector.getName }}
 
-        <div id="detector_{{ detector.getID }}" class="detector toggle {% if detector.isEnabled %}active{% endif %}">
-            <div class="toggle-handle"></div>
-        </div>
-    </li>
-    {% endfor %}
+            <div id="detector_{{ detector.getID }}" class="detector toggle {% if detector.isEnabled %}active{% endif %}">
+                <div class="toggle-handle"></div>
+            </div>
+        </li>
+        {% endfor %}
     <li></li>
+    {% endif %}
 </ul>
 
 {% include "footer.html" %}

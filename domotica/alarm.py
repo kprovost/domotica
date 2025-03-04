@@ -1,12 +1,13 @@
 import s7
+from django.conf import settings
 
 detectors = [
-        ( "Inrit", 32 ),
-        ( "Keuken", 4 ),
-        ( "Bijkeuken", 2 ),
-        ( "Zithoek", 22 ),
-        ( "Eethoek", 6 ),
-        ( "Inkomhal", 14 )
+        #( "Inrit", 32 ),
+        #( "Keuken", 4 ),
+        #( "Bijkeuken", 2 ),
+        #( "Zithoek", 22 ),
+        #( "Eethoek", 6 ),
+        #( "Inkomhal", 14 )
         ]
 
 class Detector:
@@ -41,31 +42,29 @@ class Detector:
         return True
 
 class Alarm:
-    ALARM_DB = 12
-
     def __init__(self, s7conn):
         self._s7conn = s7conn
 
     def arm(self):
         # Toggle bit
-        self._s7conn.writeBit(self.ALARM_DB, 0, 1, 1)
-        self._s7conn.writeBit(self.ALARM_DB, 0, 1, 0)
+        self._s7conn.writeFlagBit(0, settings.ALARM_ON, 1)
+        self._s7conn.writeFlagBit(0, settings.ALARM_ON, 0)
 
     def disarm(self):
         # Toggle bit
-        self._s7conn.writeBit(self.ALARM_DB, 0, 2, 1)
-        self._s7conn.writeBit(self.ALARM_DB, 0, 2, 0)
+        self._s7conn.writeFlagBit(0, settings.ALARM_OFF, 1)
+        self._s7conn.writeFlagBit(0, settings.ALARM_OFF, 0)
 
     def isArmed(self):
-        return self._s7conn.readFlagBit(5, 2)
+        return self._s7conn.readFlagBit(0, settings.ALARM_IS_SET)
 
     def isWarning(self):
         # Alarm is two state when triggered, the first 'warning' flashes the lights
         # The second stage will trigger the siren and SMS warning.
-        return self._s7conn.readFlagBit(5, 3)
-
+        return False
+   
     def isAlarmTriggered(self):
-        return self._s7conn.readBit(self.ALARM_DB, 0, 5)
+        return self._s7conn.readFlagBit(0, settings.ALARM_TRIGGERED)
 
 def getDetectors(s7conn):
     l = [ ]
