@@ -32,17 +32,18 @@ def front(request):
     return alarm_index(request)
 
 @login_required
-def lightgroups(request):
+def lights(request):
     s7conn = getS7Conn()
 
-    groups = light.loadGroupNames()
-    groups = map(lambda x: (x, _lightCount(s7conn, x)), groups)
+    lights = []
+    for (name, merker, do) in settings.LIGHTS:
+        lights.append(light.Light(name, merker, do, s7conn))
 
     context = {
             'tag': 'light',
-            'groups' : groups
+            'lights': lights
             }
-    return render(request, "lightgroups.html", context)
+    return render(request, "lights.html", context)
 
 def do_login(request):
     try:
@@ -61,20 +62,6 @@ def do_login(request):
     except Exception as e:
         return render(request, "login.html")
 
-@login_required
-def lightgroup(request, groupName):
-    s7conn = getS7Conn()
-    lights = light.loadGroup(s7conn, groupName)
-    if lights is None:
-        raise Http404
-
-    context = {
-            'tag': 'light',
-            'groupName': groupName,
-            'lights' : lights
-            }
-    return render(request, "lights.html", context)
-
 @csrf_exempt
 @login_required
 def lightswitch(request, action):
@@ -83,56 +70,30 @@ def lightswitch(request, action):
         if not light.AllOff(s7conn):
             raise Http404
         return HttpResponse()
+    if action == "all_on":
+        if not light.AllOn(s7conn):
+            raise Http404
+        return HttpResponse()
 
     idInt = 0
     try:
-        idInt = int(request.REQUEST["id"])
+        idInt = int(request.POST.get("id", ""))
     except:
         raise Http404
 
-    l = light.Light("", idInt, s7conn)
+    # Rather than find the light just take the ID from the post
+    # Bit of a security issue, because it's an arbitrary merker write now
+    l = light.Light("", idInt, 0, s7conn)
 
     if action == "toggle":
-        print ("Light %d toggled by %s" % (l.getID(), request.META.get('REMOTE_ADDR')))
+        print("Light %d toggled by %s" % (l.getID(), request.META.get('REMOTE_ADDR')))
         if not l.toggleLight():
             raise Http404
-    elif action == "toggle_motion":
-        if not l.toggleMotion():
-            raise Http404
-    elif action == "toggle_blink":
-        if not l.toggleBlinkOnAlarm():
-            raise Http404
-    elif action == "timeout":
-        timeout = 0
-        try:
-            timeout = int(request.REQUEST["timeout"])
-        except:
-            raise Http404
-        l.setTimeout(timeout)
     else:
         raise Http404
 
     return HttpResponse()
 
-@login_required
-def lightsettings(request, id):
-    idInt = 0
-    try:
-        idInt = int(id)
-    except:
-        raise Http404
-
-    s7conn = getS7Conn()
-
-    l = light.loadByID(s7conn, idInt)
-    if l is None:
-        raise Http404
-
-    context = {
-            'tag': 'light',
-            'light': l
-            }
-    return render(request, "lightsettings.html", context)
 
 @login_required
 def alarm_index(request):
@@ -162,14 +123,9 @@ def alarm_action(request, action):
         a.arm()
     elif action == 'disarm':
         a.disarm()
-    elif action == 'toggle_detector':
-        idInt = 0
-        try:
-            idInt = int(request.REQUEST["id"])
-        except:
-            raise Http404
-        d = alarm.getDetectorByID(s7conn, idInt)
-        d.toggle()
+    else:
+        raise Http404
+
     context = {
             'tag': 'lights',
             'alarm': a,
@@ -177,85 +133,3 @@ def alarm_action(request, action):
             }
     return render(request, "alarm.html", context)
 
-@login_required
-def powerplug(request):
-    s7conn = getS7Conn()
-
-    plugs = power.getPlugs(s7conn)
-    if power is None:
-        raise Http404
-
-    context = {
-            'tag': 'power',
-            'powerplugs': plugs
-            }
-    return render(request, "power.html", context)
-
-@csrf_exempt
-@login_required
-def powerswitch(request, action, ID):
-    s7conn = getS7Conn()
-
-    plug = power.getPlug(int(ID), s7conn)
-
-    if action == "toggle":
-        print ("Power plug %s toggled by %s" % (plug.getName(),
-            request.META.get('REMOTE_ADDR')))
-        if not plug.togglePower():
-            raise Http404
-    else:
-        raise Http404
-
-    return HttpResponse()
-
-@login_required
-def heatinggraph(request, period):
-    if period == "daily":
-        time = "1 day"
-    elif period == "weekly":
-        time = "1 week"
-    else:
-        time = "1 year"
-
-    t = TemperaturePoller()
-    img = t.draw(time)
-    response = HttpResponse()
-    response['content_type'] = "image/png"
-    img.save(response,'png')
-    return response
-
-@login_required
-def heatinghistory(request):
-    context = {
-            'tag': 'heating',
-            }
-    return render(request, "heatinghistory.html", context)
-
-@login_required
-def heating(request):
-    s7conn = getS7Conn()
-    h = Heating(s7conn)
-
-    context = {
-            'tag': 'heating',
-            'heating': h
-            }
-    return render(request, "heating.html", context)
-
-@csrf_exempt
-@login_required
-def heatingtoggle(request, ID):
-    s7conn = getS7Conn()
-    h = Heating(s7conn)
-
-    if ID == "force_on":
-        h.toggleForceOn()
-    elif ID == "auto":
-        h.toggleAuto()
-    elif ID == "state":
-        # Read only variable. Do nothing
-        pass
-    else:
-        raise Http404
-
-    return HttpResponse()

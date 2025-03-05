@@ -11,19 +11,11 @@ import domotica.views
 
 urlpatterns = [
     re_path(r'^$', domotica.views.front, name='front'),
-    re_path(r'^lightgroups$', domotica.views.lightgroups, name='lightgroups'),
     re_path(r'^login$', domotica.views.do_login, name='login'),
-    re_path(r'^lightgroup/(?P<groupName>.*)', domotica.views.lightgroup, name='lightgroup'),
     re_path(r'^lightswitch/(?P<action>.*)', domotica.views.lightswitch, name='lightswitch'),
-    re_path(r'^light/settings/(?P<id>\d+)$', domotica.views.lightsettings, name='lightsettings'),
-    re_path(r'^alarm$', domotica.views.alarm_index, name='alarm'),
+    re_path(r'^lights', domotica.views.lights, name='lights'),
     re_path(r'^alarm_action/(?P<action>.*)$', domotica.views.alarm_action, name='alarm_action'),
-    re_path(r'^power$', domotica.views.powerplug, name='power'),
-    re_path(r'^powerplug/(?P<action>.*)/(?P<ID>.*)', domotica.views.powerswitch, name='powerswitch'),
-    re_path(r'^heating$', domotica.views.heating, name='heating'),
-    re_path(r'^heating/toggle/(?P<ID>.*)', domotica.views.heatingtoggle, name='heatingtoggle'),
-    re_path(r'^heating/history$', domotica.views.heatinghistory, name='heatinghistory'),
-    re_path(r'^heating/graph/(?P<period>.*)$', domotica.views.heatinggraph, name='heating_graph'),
+    re_path(r'^alarm$', domotica.views.alarm_index, name='alarm'),
 
     # Examples:
     # re_path(r'^$', domotica.views.home, name='home'),
