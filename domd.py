@@ -13,9 +13,7 @@ import logging
 
 import s7
 import domotica.settings as settings
-
 from pollers.alarmpoller import AlarmPoller
-from pollers.temperaturepoller import TemperaturePoller
 
 POLL_INTERVAL = 5
 
@@ -52,7 +50,6 @@ def main():
 
     pollers = [
             AlarmPoller(),
-            TemperaturePoller()
         ]
 
     s7conn = connect()

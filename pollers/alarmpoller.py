@@ -17,14 +17,7 @@ class AlarmPoller(Poller):
             logging.info("Alarm deactivated")
 
     def onTriggered(self, s7conn):
-        alarmed = [ ]
-        for detector in alarm.getDetectors(s7conn):
-            if detector.isTriggered():
-                alarmed.append(detector.getName())
-        if not alarmed:
-            logging.error("Alarm is triggered, but no detector is active!")
-
-        msg = "Alarm! Detectie in %s." % (", ".join(alarmed))
+        msg = "Alarm!"
         logging.warn(msg)
         for dest in settings.SMS_DESTINATIONS:
             if not sms.send(msg, dest):
