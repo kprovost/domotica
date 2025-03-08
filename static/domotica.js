@@ -54,9 +54,20 @@ function all_off()
     $.post("/lightswitch/all_off")
         .fail(function(){
                 console.log("Failed to turn all lights off");
-                location.reload();
             });
+    location.reload();
 };
+
+function all_on()
+{
+    console.log("All lights on");
+    $.post("/lightswitch/all_on")
+        .fail(function(){
+                console.log("Failed to turn all lights on");
+            });
+    location.reload();
+};
+
 
 function alarm_disarm()
 {
@@ -144,6 +155,8 @@ function installPostHandlers() {
 
     if (document.querySelector("#all_off"))
         document.querySelector("#all_off").addEventListener('touchend', all_off);
+    if (document.querySelector("#all_on"))
+        document.querySelector("#all_on").addEventListener('touchend', all_on);
     if (document.querySelector("#refresh"))
         document.querySelector("#refresh").addEventListener('touchend', refresh);
     if (document.querySelector("#alarm_disarm"))
