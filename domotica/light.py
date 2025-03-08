@@ -1,5 +1,6 @@
 from django.conf import settings
 import s7
+import time
 
 class Light:
     def __init__(self, name, merker, do, s7conn):
@@ -20,15 +21,18 @@ class Light:
 
     def toggleLight(self):
         self._s7conn.writeFlagBit(0, self._merker, 1)
+        time.sleep(0.1)
         self._s7conn.writeFlagBit(0, self._merker, 0)
         return True
 
 def AllOn(s7conn):
     s7conn.writeFlagBit(0, settings.LIGHTS_ALL_ON, 1)
+    time.sleep(0.5)
     s7conn.writeFlagBit(0, settings.LIGHTS_ALL_ON, 0)
     return True
 
 def AllOff(s7conn):
     s7conn.writeFlagBit(0, settings.LIGHTS_ALL_OFF, 1)
+    time.sleep(0.5)
     s7conn.writeFlagBit(0, settings.LIGHTS_ALL_OFF, 0)
     return True

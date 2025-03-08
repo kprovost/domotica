@@ -1,4 +1,5 @@
 import s7
+import time
 from django.conf import settings
 
 detectors = [
@@ -48,11 +49,13 @@ class Alarm:
     def arm(self):
         # Toggle bit
         self._s7conn.writeFlagBit(0, settings.ALARM_ON, 1)
+        time.sleep(0.1)
         self._s7conn.writeFlagBit(0, settings.ALARM_ON, 0)
 
     def disarm(self):
         # Toggle bit
         self._s7conn.writeFlagBit(0, settings.ALARM_OFF, 1)
+        time.sleep(0.1)
         self._s7conn.writeFlagBit(0, settings.ALARM_OFF, 0)
 
     def isArmed(self):
