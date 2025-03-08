@@ -14,7 +14,21 @@ import domotica.alarm as alarm
 from domotica.heating import Heating
 import domotica.power as power
 
+class StubS7:
+    def readFlagBit(self, db, id):
+        return 0
+    def writeFlagBit(self, db, id, value):
+        return True
+    def readBit(self, db, id, bit):
+        return 0
+    def writeBit(self, db, id, bit, value):
+        return True
+    def readOutput(self, do):
+        return 0
+
 def getS7Conn():
+    if len(settings.PLC_IP) == 0:
+        return StubS7()
     return s7.S7Comm(settings.PLC_IP, settings.PLC_TYPE)
 
 def _lightCount(s7conn, groupName):
