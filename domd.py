@@ -24,7 +24,7 @@ def poll(s7conn, pollers):
 def connect():
     if len(settings.PLC_IP) == 0:
         return s7.StubS7()
-    return s7.S7Comm(settings.PLC_IP, 1)
+    return s7.S7Comm(settings.PLC_IP, settings.PLC_TYPE)
 
 def setup_logger(options):
     lvl = logging.INFO
